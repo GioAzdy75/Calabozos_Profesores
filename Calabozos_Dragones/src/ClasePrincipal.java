@@ -14,37 +14,46 @@ public class ClasePrincipal {
 		Scanner scanner = new Scanner(System.in);
 		
 		//Lista de Criaturas
-		List<Heroe>lista_heroes = new ArrayList<Heroe>();
-		List<Criatura>lista_esbirros = new ArrayList<Criatura>();
+		List<Criatura>lista_aliados = new ArrayList<Criatura>();
+		List<Criatura>lista_enemigos = new ArrayList<Criatura>();
 		
+		
+		//Creamos 3 tanques
 		for (int i = 0; i <= 3; i++) {
-            //System.out.println("Valor de i: " + i);
-            //Creamos Criaturas
-            Heroe heroe = new Heroe("cabezon " + i);
-            Esbirros esbirro = new Esbirros("esbirrito "+ i);
-            //llenamos la lista
-            lista_heroes.add(heroe);
-            lista_esbirros.add(esbirro);
+			Tanque tanque = new Tanque("Tanque " + i);
+			lista_aliados.add(tanque);
         }
+		//Creamos 5 luchadores
+		for (int i = 0; i <= 5; i++) {
+			Luchador luchador = new Luchador("Luchador " + i);
+			lista_aliados.add(luchador);
+        }
+		//Creamos 2 Heroes
+		Heroe hero_1 = new Heroe("Hero_1");
+		Heroe hero_2 = new Heroe("Hero_2");
+		lista_aliados.add(hero_1);
+		lista_aliados.add(hero_2);
 		
+		//Creamos Enemigos
+		for (int i = 0; i <= 9; i++) {
+			if (i<4) {
+				Tanque tanque = new Tanque("Enemigo-Tanque " + i);
+				lista_enemigos.add(tanque);
+			}
+			else {
+				Luchador luchador = new Luchador("Enemigo-Luchador " + i);
+				lista_enemigos.add(luchador);
+			}	
+        }
+		Profesor profe_1 = new Profesor("Ochoa");
+		lista_enemigos.add(profe_1);
 	
 
 		//Crear Arena
-		GrupoHeroes grupo_heroes = new GrupoHeroes(lista_heroes);
-		GrupoCriatura grupo_esbirros = new GrupoCriatura(lista_esbirros);
+		GrupoHeroes grupo_heroes = new GrupoHeroes(lista_aliados);
+		GrupoCriatura grupo_esbirros = new GrupoCriatura(lista_enemigos);
 		
 		Arena arena_1 = new Arena("primer_arena",grupo_heroes,grupo_esbirros);
-		
-		
-		
-		
-		//Pruebas
-		
-		//System.out.println(grupo_heroes.atacar_en_grupo());
-		//grupo_esbirros.mostrar_criatura();
-		//System.out.println(grupo_esbirros.atacar_en_grupo());
-		//grupo_esbirros.recibir_dano(100);
-		//grupo_esbirros.mostrar_criatura();
 		
 		arena_1.iniciar_enfrentamiento();
 	}

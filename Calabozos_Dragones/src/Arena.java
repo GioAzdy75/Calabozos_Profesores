@@ -27,7 +27,7 @@ public class Arena {
 		//Muestra los Heroes y A las Criaturas
 		System.out.println("Inicia El Combate");
 		System.out.println("------------------");
-		grupo_heroes.mostrar_heroes();
+		grupo_heroes.mostrar_criatura();
 		System.out.println("-------vs--------");
 		grupo_esbirros.mostrar_criatura();
 		System.out.println("------------------");
@@ -61,11 +61,11 @@ public class Arena {
 			}
 			
 			//Revisar Estadisticas de vida
-			
+			System.out.println("-----Estadisticas de Enemigo------");
 			grupo_esbirros.quitar_muertos();
 			grupo_esbirros.mostrar_criatura();
 			
-			if (grupo_esbirros.esta_vacio()){
+			if (grupo_esbirros.esta_vacio() | grupo_heroes.esta_vacio()){
 				break;
 			}
 			
@@ -74,11 +74,17 @@ public class Arena {
 			switch (numeroAleatorio) {
 				case 1:
 	                System.out.println("Ataque Mele");
+	                int dano_total = grupo_esbirros.atacar_en_grupo();
+	                grupo_heroes.recibir_dano(dano_total);
 	                break;
 	            case 2:
-	                System.out.println("Ataque Especial");
+	                System.out.println("Ataque Rango");
 	                break;
+	                
 	            case 3:
+	            	System.out.println("Ataque Especial");
+	            	//Pensar logica para traer las habilidades especiales
+	            case 4:
 	                System.out.println("No hacer Nada");
 	                break;
 	            default:
@@ -88,7 +94,13 @@ public class Arena {
 			
 			
 			//Revisar Estadisticas de vida
+			System.out.println("-----Estadisticas de Heroes------");
+			grupo_heroes.quitar_muertos();
+			grupo_heroes.mostrar_criatura();
 			
+			if (grupo_esbirros.esta_vacio() | grupo_heroes.esta_vacio()){
+				break;
+			}
 			if (input_teclado == 4) {
 				break;
 			}

@@ -5,13 +5,16 @@ import java.util.List;
 //Clase base para los personajes
 class Criatura {
 	private String nombre;
-	private int vida = 100;
+	private int vida;
 	private int energia;
-	private int ataque = 10;
+	private int ataque;
 
  // Constructor, getters y setters
-	 public Criatura(String nombre) {
+	 public Criatura(String nombre , int vida , int energia , int ataque) {
 		 this.nombre = nombre;
+		 this.vida = vida;
+		 this.energia = energia;
+		 this.ataque = ataque;
 	 }
 	 
 	 public String getNombre() {
@@ -37,21 +40,54 @@ class Criatura {
 
 //Clase base para los héroes
 class Heroe extends Criatura {
- // Constructor, getters y setters
+	// Constructor
 	public Heroe(String nombre) {
-		 super(nombre);
+		super(nombre,200,100,100); // nombre = nombre, vida = 200 , energia = 100 , ataque = 100
 	 }
+	// getters y setters
 }
 
+
+class Tanque extends Criatura {
+	//Constructor
+	public Tanque(String nombre) {
+		super(nombre,400,0,30); // nombre = nombre, vida = 400 , energia = 0 , ataque = 30
+	}
+}
+
+class Luchador extends Criatura {
+	//Constructor
+	public Luchador(String nombre) {
+		super(nombre,100,0,60); // nombre = nombre, vida = 100 , energia = 0 , ataque = 60
+	}
+}
+
+class Profesor extends Criatura {
+	//Constructor
+	public Profesor(String nombre) {
+		super(nombre, 2000, 500, 100);
+	}
+	
+	
+	//Ataque Del Ochoa
+	public void habilidadEspecial(GrupoCriatura criaturas) {
+		System.out.println("----Sucesiones Convergentes----");
+		criaturas.recibir_dano(1000);
+	}
+}
+
+
+/*
 //Clase base para los enemigos
 class Esbirros extends Criatura {
- public Esbirros(String nombre) {
+	// Constructor
+	public Esbirros(String nombre) {
 		super(nombre);
 		// TODO Auto-generated constructor stub
 	}
- // Constructor, getters y setters
+	//getters y setters
 }
-
+*/
 
 class GrupoCriatura {
 	private List<Criatura> lista_criatura = new ArrayList<>();
@@ -105,31 +141,17 @@ class GrupoCriatura {
 		}
 		return false;
 	}
+	
 }
 
 
 //Hacer que herede de GrupoCriaturas
-class GrupoHeroes {
-	private List<Heroe> lista_heroes;
+class GrupoHeroes extends GrupoCriatura {
 	
-	public GrupoHeroes(List<Heroe>lista_heroes) {
-		this.lista_heroes = lista_heroes;
+	public GrupoHeroes(List<Criatura>lista_heroes) {
+		super(lista_heroes);
 	}
 	
-	public void mostrar_heroes() {
-		for (Heroe heroe : lista_heroes) {
-			System.out.println(heroe.getNombre() + " - " + heroe.getAtaque());
-		}
-	}
-	
-	public int atacar_en_grupo() {
-		//retorna el daño total de todos los personajes en grupo
-		int ataque_total = 0;
-		for (Heroe heroe : lista_heroes) {
-			ataque_total = ataque_total + heroe.getAtaque();
-		}
-		return ataque_total;
-	}
 }
 
 //class GrupoEsbirros extends GrupoCriatura {
