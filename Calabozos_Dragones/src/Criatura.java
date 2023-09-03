@@ -33,8 +33,19 @@ class Criatura {
 		 this.vida = vida;
 	 }
 	 
+	 public void recibirDano(int dano) {
+		 this.vida -= vida;
+		 if (this.vida <= 0){
+			 this.vida = 0;
+		 }
+	 }
+	 
 	 public void morir() {
 		 this.vida = 0;
+	 }
+	 
+	 public String getEstadisticasCriatura() {
+		 return this.nombre + " - " +this.vida + " - " + this.ataque +" - " + this.energia;
 	 }
 }
 
@@ -45,8 +56,47 @@ class Heroe extends Criatura {
 		super(nombre,200,100,100); // nombre = nombre, vida = 200 , energia = 100 , ataque = 100
 	 }
 	// getters y setters
+	
+	
+	//Habilidad Especial
+	public void HabilidadEspecial() {
+		
+	}
 }
 
+//Clase base para los esbirros
+class Esbirro extends Criatura {
+	// Constructor
+	public Esbirro(String nombre) {
+		super(nombre,100,0,50);
+	}
+	//getters y setters
+}
+
+//Clase base para Profesores
+class Profesor extends Criatura {
+	//Constructor
+	public Profesor(String nombre) {
+		super(nombre, 2000, 500, 100);
+	}
+	
+	//Habilidad Especial
+	public void habilidadEspecial() {
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 class Tanque extends Criatura {
 	//Constructor
@@ -61,34 +111,13 @@ class Luchador extends Criatura {
 		super(nombre,100,0,60); // nombre = nombre, vida = 100 , energia = 0 , ataque = 60
 	}
 }
+*/
 
-class Profesor extends Criatura {
-	//Constructor
-	public Profesor(String nombre) {
-		super(nombre, 2000, 500, 100);
-	}
-	
-	
-	//Ataque Del Ochoa
-	public void habilidadEspecial(GrupoCriatura criaturas) {
-		System.out.println("----Sucesiones Convergentes----");
-		criaturas.recibir_dano(1000);
-	}
-}
+
+
 
 
 /*
-//Clase base para los enemigos
-class Esbirros extends Criatura {
-	// Constructor
-	public Esbirros(String nombre) {
-		super(nombre);
-		// TODO Auto-generated constructor stub
-	}
-	//getters y setters
-}
-*/
-
 class GrupoCriatura {
 	private List<Criatura> lista_criatura = new ArrayList<>();
 	
@@ -145,6 +174,8 @@ class GrupoCriatura {
 }
 
 
+*/
+/*
 //Hacer que herede de GrupoCriaturas
 class GrupoHeroes extends GrupoCriatura {
 	
@@ -154,11 +185,11 @@ class GrupoHeroes extends GrupoCriatura {
 	
 }
 
-//class GrupoEsbirros extends GrupoCriatura {
-	//private List<Esbirros> lista_esbirros;
+class GrupoEsbirros extends GrupoCriatura {
+	public GrupoEsbirros(List<Criatura>lista_esbirros) {
+		super(lista_esbirros);
+	}
 	
-	//public GrupoEsbirros(List<Esbirros>lista_esbirros) {
-		//this.lista_esbirros = lista_esbirros;
-	//}
-	
-//}
+}
+
+*/
