@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //Clase base para los personajes
 class Criatura {
@@ -25,6 +26,10 @@ class Criatura {
 		 return this.ataque;
 	 }
 	 
+	 public void setAtaque(int attack) {
+		 this.ataque = attack;
+	 }
+	 
 	 public int getVida() {
 		 return this.vida;
 	 }
@@ -34,7 +39,7 @@ class Criatura {
 	 }
 	 
 	 public void recibirDano(int dano) {
-		 this.vida -= vida;
+		 this.vida -= dano;
 		 if (this.vida <= 0){
 			 this.vida = 0;
 		 }
@@ -57,10 +62,85 @@ class Heroe extends Criatura {
 	 }
 	// getters y setters
 	
-	
+	//Ataque Mele
+	public int ataqueMele() {
+		return this.getAtaque();
+	}
+	//Ataque Rango
+	public int ataqueRango() {
+		return this.getAtaque() / 2;
+	}
 	//Habilidad Especial
-	public void HabilidadEspecial() {
+	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
 		
+	}
+	
+	public void HabilidadEspecial(Profesor profesor) {
+		
+	}
+}
+
+class Mago extends Heroe {
+	public Mago(String nombre) {
+		super(nombre); // nombre = nombre
+	}
+	
+	//Habilidad Especial Congelar
+	//Reduce el daño de todos los esbirros en un 30%
+	//Solo funciona con esbirros
+	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+		System.out.println("Ventisca Feroz");
+		for (Esbirro esbirro : lista_esbirros) {
+			double danoEsbirro = esbirro.getAtaque() * 0.7;
+			System.out.println(danoEsbirro);
+			int nuevo_dano = (int) (danoEsbirro);
+			esbirro.setAtaque(nuevo_dano);
+		}
+	}
+}
+
+class Luchador extends Heroe {
+	//Constructor
+	public Luchador(String nombre) {
+		super(nombre); // nombre = nombre
+	}
+	
+	//Habilidad Especial Golpe con el doble de daño
+	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+		System.out.println("Golpe Furioso");
+		System.out.println("##Escoja al Esbirro al que desee atacar##");
+		Scanner scanner = new Scanner(System.in); //Scanner del teclado
+		int input_teclado = scanner.nextInt();
+		Esbirro esbirro = lista_esbirros.get(input_teclado - 1);
+		esbirro.recibirDano(getAtaque() * 2);
+	}
+	
+	public void HabilidadEspecial(Profesor profesor) {
+		System.out.println("Golpe Furioso");
+		profesor.recibirDano(getAtaque() * 2);
+	}
+}
+
+class Kamikaze extends Heroe {
+	public Kamikaze(String nombre) {
+		super(nombre);
+	}
+	
+	//Habilidad Especial , Se suicida y mata a un esbirro sin importar la vida 
+	//o le quita 20% hp al boss
+	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+		System.out.println("Kamikaze mode ON");
+		System.out.println("##Escoja al Esbirro al que desee atacar##");
+		Scanner scanner = new Scanner(System.in); //Scanner del teclado
+		int input_teclado = scanner.nextInt();
+		Esbirro esbirro = lista_esbirros.get(input_teclado - 1);
+		esbirro.morir();
+	}
+	public void HabilidadEspecial(Profesor profesor) {
+		//20% hp
+		double dano = profesor.getVida() * 0.80;
+		int dano_final = (int) (dano);
+		profesor.recibirDano(dano_final);
 	}
 }
 
@@ -68,7 +148,7 @@ class Heroe extends Criatura {
 class Esbirro extends Criatura {
 	// Constructor
 	public Esbirro(String nombre) {
-		super(nombre,100,0,50);
+		super(nombre,200,0,50);
 	}
 	//getters y setters
 }
@@ -81,12 +161,27 @@ class Profesor extends Criatura {
 	}
 	
 	//Habilidad Especial
-	public void habilidadEspecial() {
+	public void HabilidadEspecial(List<Heroe>lista_heroes) {
 		
 	}
 }
 
-
+class Ochoa extends Profesor {
+	//Constructor
+	public Ochoa(String nombre) {
+		super(nombre);
+	}
+	
+	//Habilidad especial
+	public void HabilidadEspecial(List<Heroe>lista_heroes) {
+		for (Heroe heroe : lista_heroes) {
+			double dano_jefe = heroe.getVida() * 0.15;
+			double reducir_ataque = heroe.getAtaque() * 0.85;
+			heroe.recibirDano((int) dano_jefe);
+			heroe.setAtaque((int) reducir_ataque);
+		}
+	}
+}
 
 
 
@@ -102,13 +197,6 @@ class Tanque extends Criatura {
 	//Constructor
 	public Tanque(String nombre) {
 		super(nombre,400,0,30); // nombre = nombre, vida = 400 , energia = 0 , ataque = 30
-	}
-}
-
-class Luchador extends Criatura {
-	//Constructor
-	public Luchador(String nombre) {
-		super(nombre,100,0,60); // nombre = nombre, vida = 100 , energia = 0 , ataque = 60
 	}
 }
 */

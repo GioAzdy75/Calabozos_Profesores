@@ -12,15 +12,19 @@ public class DungeonGame {
 		
 		//Inicializamos los Heroes
 		List<Heroe>lista_heroes = new ArrayList<Heroe>();
+		Luchador luchador = new Luchador("luchador1");
+		Mago mago = new Mago("Mago1");
+		lista_heroes.add(luchador);
+		lista_heroes.add(mago);
 		for (int i = 1; i <=10; i++) {
 			Heroe heroe = new Heroe("Heroe " + i);
 			lista_heroes.add(heroe);
         }
 		//Inicializamos los Jefes
-		Profesor profesor_1 = new Profesor("Profesor Ochoa");
+		Profesor profesor_1 = new Ochoa("Profesor Ochoa");
 		Profesor profesor_2 = new Profesor("Profesor Harpo");
 		//Creamos las Arenas
-		Arena arena_1 = new Arena("Arena 1",lista_heroes,6,profesor_1);
+		Arena arena_1 = new Arena("Arena 1",lista_heroes,1,profesor_1);
 		Arena arena_2 = new Arena("Arena 2",lista_heroes,4,profesor_2);
 		
 		//Elegimos la Arena
