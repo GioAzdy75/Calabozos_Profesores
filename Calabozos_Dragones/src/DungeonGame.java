@@ -10,37 +10,77 @@ public class DungeonGame {
 		//Titulo
 		System.out.println("####Calabozos_Y_Dragones####");
 		
+		
+		System.out.println("####Iniciando Interfaz Grafica####");
 		//Inicializamos los Heroes
 		List<Heroe>lista_heroes = new ArrayList<Heroe>();
-		Luchador luchador = new Luchador("luchador1");
-		Mago mago = new Mago("Mago1");
+		Luchador luchador = new Luchador("Lc1");
+		Mago mago = new Mago("Mg1");
+		Arquero arquero = new Arquero("ArQ1");
+		Arquero arquero2 = new Arquero("ArQ2");
+		Arquero arquero3 = new Arquero("ArQ3");
+		Arquero arquero4 = new Arquero("ArQ4");
 		lista_heroes.add(luchador);
 		lista_heroes.add(mago);
-		for (int i = 1; i <=10; i++) {
-			Heroe heroe = new Heroe("Heroe " + i);
-			lista_heroes.add(heroe);
-        }
+		lista_heroes.add(arquero);
+		lista_heroes.add(arquero2);
+		lista_heroes.add(arquero3);
+		lista_heroes.add(arquero4);
+		
+		
+		
+		List<List<Arena>> calabozo = crear_niveles(lista_heroes);
+		
+		
+		//
+		
+		SalaGUI salita = new SalaGUI(calabozo.get(0).get(0));
+		//
+		
+		/*
+		for (List<Arena> lista_sala : calabozo) {
+			int i = 0;
+			for (Arena sala : lista_sala) {
+				System.out.println("|"+ i +"|" +sala.getNombre());
+				i++;
+			}
+			System.out.println("Eliga la Sala a ingresar");
+			int input_teclado = scanner.nextInt();
+			System.out.println("Ingreso a la Sala " + input_teclado);
+			lista_sala.get(input_teclado).iniciar_enfrentamiento();
+			System.out.println("Enfrentamiento Terminado, listo para seguir");
+		}
+		
+		System.out.println("!!!FELICITACIONES!!! Te Graduaste!!");
+		*/
+	}
+	
+	private static List<List<Arena>> crear_niveles(List<Heroe>lista_heroes) {
+		//Calabozo
+		List<List<Arena>> calabozo = new ArrayList<List<Arena>>();
+		//Niveles
+		List<Arena> nivel_1 = new ArrayList<Arena>();
+		List<Arena> nivel_2 = new ArrayList<Arena>();
+		List<Arena> nivel_3 = new ArrayList<Arena>();
+		List<Arena> nivel_4 = new ArrayList<Arena>();
+		List<Arena> nivel_5 = new ArrayList<Arena>();
+		//Nivel 1
 		//Inicializamos los Jefes
 		Profesor profesor_1 = new Ochoa("Profesor Ochoa");
 		Profesor profesor_2 = new Profesor("Profesor Harpo");
 		//Creamos las Arenas
-		Arena arena_1 = new Arena("Arena 1",lista_heroes,1,profesor_1);
-		Arena arena_2 = new Arena("Arena 2",lista_heroes,4,profesor_2);
+		nivel_1.add(new Arena("Sala Ochoa",lista_heroes,5,profesor_1));
+		//Nivel 2
+		nivel_2.add(new Arena("Sala Harpo",lista_heroes,4,profesor_2));
+		//Nivel 3
 		
-		//Elegimos la Arena
-		System.out.println("Eliga la Sala 1 : 1 o Sala 2 : 2");
-		int input_teclado = scanner.nextInt();
-		switch (input_teclado) {
-		case 1:
-            System.out.println("Ingreso a la Sala 1");
-            arena_1.iniciar_enfrentamiento();
-            break;
-        case 2:
-            System.out.println("Ingreso a la Sala 2");
-            arena_2.iniciar_enfrentamiento();
-            break;
-        default:
-            System.out.println("Opción no válida.");
-	}
+		//Nivel 4
+		
+		//Nivel 5
+		
+		calabozo.add(nivel_1);
+		calabozo.add(nivel_2);
+		return calabozo;
+		
 	}
 }
