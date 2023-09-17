@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.Random;
+
 
 //Clase base para Profesores
 class Profesor extends Criatura {
@@ -14,19 +16,23 @@ class Profesor extends Criatura {
 }
 
 //Nivel 1
-class Ochoa extends Profesor {
+class Analisis extends Profesor {
 	//Constructor
-	public Ochoa(String nombre) {
+	public Analisis(String nombre) {
 		super(nombre);
+		imageSrc = "Boss.png";
 	}
 	
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
+		System.out.println("Sucesiones Infinitas");
 		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
+			double dano_jefe = heroe.getVida() * 0.10;
+			double reducir_ataque = heroe.getAtaque() * 0.90;
+			double reducir_energia = heroe.getEnergia() * 0.90;
 			heroe.recibirDano((int) dano_jefe);
 			heroe.setAtaque((int) reducir_ataque);
+			heroe.setEnergia((int) reducir_energia);
 		}
 	}
 }
@@ -38,13 +44,14 @@ class Algebra extends Profesor {
 	}
 	
 	//Habilidad especial
+	//Reduce 15% energia y 5 % de vida
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
 		System.out.println("Matrices Multidimencional");
 		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
+			double dano_jefe = heroe.getVida() * 0.05;
+			double reducir_energia = heroe.getEnergia() * 0.85;
 			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
+			heroe.setEnergia((int) reducir_energia);
 		}
 	}
 }
@@ -59,8 +66,8 @@ class Geometria extends Profesor {
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
 		System.out.println("Superficies Cuadraticas");
 		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
+			double dano_jefe = heroe.getVida() * 0.10;
+			double reducir_ataque = heroe.getAtaque() * 0.90;
 			heroe.recibirDano((int) dano_jefe);
 			heroe.setAtaque((int) reducir_ataque);
 		}
@@ -76,45 +83,40 @@ class Algoritmos extends Profesor {
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(lista_heroes.size());
+        Heroe hero = lista_heroes.get(indiceAleatorio);
+        int nuevaVida = (int)(hero.getVida() * 0.70);
+        hero.setVida(nuevaVida);
 	}
 }
 
-class Harpo extends Profesor {
+class Paradigmas extends Profesor {
 	//Constructor
-	public Harpo(String nombre) {
+	public Paradigmas(String nombre) {
 		super(nombre);
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(lista_heroes.size());
+        Heroe hero = lista_heroes.get(indiceAleatorio);
+        int nuevoDano = (int)(hero.getAtaque() * 0.60);
+        hero.setAtaque(nuevoDano);
 	}
 }
+
+
 
 //Nivel 3
-class Inteligencia extends Profesor {
+class InteligenciaArtificial extends Profesor {
 	//Constructor
-	public Inteligencia(String nombre) {
+	public InteligenciaArtificial(String nombre) {
 		super(nombre);
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+		
 	}
 }
 
@@ -126,12 +128,7 @@ class Compiladores extends Profesor {
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+		
 	}
 }
 
@@ -143,12 +140,7 @@ class Tesis extends Profesor {
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+		
 	}
 }
 
@@ -159,11 +151,6 @@ class Laburo extends Profesor {
 	}
 	//Habilidad especial
 	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		for (Heroe heroe : lista_heroes) {
-			double dano_jefe = heroe.getVida() * 0.15;
-			double reducir_ataque = heroe.getAtaque() * 0.85;
-			heroe.recibirDano((int) dano_jefe);
-			heroe.setAtaque((int) reducir_ataque);
-		}
+		
 	}
 }

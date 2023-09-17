@@ -3,12 +3,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Arena {
 	private String nombre;
 	List<Heroe>lista_heroes = new ArrayList<Heroe>();
 	List<Esbirro>lista_esbirros = new ArrayList<Esbirro>();
-	private Profesor profesor;
+	Profesor profesor;
 	private Boolean completado;
 	
 	
@@ -24,6 +25,16 @@ public class Arena {
 		return this.nombre;
 	}
 	
+	public void verificarVidaCriaturas(List<? extends Criatura>lista_criatura) {
+		Iterator<? extends Criatura> iterador = lista_criatura.iterator();
+		
+	    while (iterador.hasNext()) {
+	        Criatura criatura = iterador.next();
+	        if (criatura.getVida() == 0) {
+	            iterador.remove();
+	        }
+	    }
+	}
 	//Metodo para Iniciar Enfrentamiento dentro de la Sala
 	public boolean iniciar_enfrentamiento() {
 		//Utilidades
@@ -31,6 +42,9 @@ public class Arena {
 		Random random = new Random(); //variable Random
 		int input_teclado;
 		boolean combate_on = true;
+		//Interfaz Grafica
+		SalaGUI salaGUI = new SalaGUI(this);
+		//
 		
 		System.out.println("Inicia El Combate");
 		
@@ -67,8 +81,13 @@ public class Arena {
 				combate_on = false;
 				this.completado = false;
 			}
+			//Actualizamos La Interfaz Grafica
+			salaGUI.actualizarGUI();
+			//
 			//Turno Esbirros
 			gameController.combateTurnoEsbirro(random, lista_esbirros, lista_heroes, profesor);
+			//Revisamos la vida de Heroes
+			verificarVidaCriaturas(lista_heroes);
 			//Revisar Estadisticas de vida
 			if (lista_esbirros.isEmpty()){
 				combate_on = false;
@@ -78,7 +97,9 @@ public class Arena {
 				combate_on = false;
 				this.completado = false;
 			}
-			
+			//Actualizamos La Interfaz Grafica
+			salaGUI.actualizarGUI();
+			//
 			try {
 	            if (System.getProperty("os.name").contains("Windows")) {
 	                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -120,6 +141,7 @@ public class Arena {
 				this.completado = false;
 			}
 			if (profesor.getVida() == 0) {
+				salaGUI.cerrarVentana();
 				return true;
 			}
 			//Turno Profesor
@@ -130,6 +152,7 @@ public class Arena {
 				this.completado = false;
 			}
 			if (profesor.getVida() == 0) {
+				salaGUI.cerrarVentana(); // Libera los recursos de la ventana
 				return true;
 			}
 		}
