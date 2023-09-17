@@ -11,7 +11,7 @@ public class DungeonGame {
 		System.out.println("####Calabozos_Y_Dragones####");
 		//Inicializamos los Heroes
 		List<Heroe>lista_heroes = inicializarHeroes();
-		List<List<Arena>> calabozo = crear_niveles(lista_heroes);
+		List<List<Arena>> calabozo = crear_niveles(lista_heroes);//Revisar si quito este parametro
 		
 		
 		for (List<Arena> lista_sala : calabozo) {
@@ -23,11 +23,19 @@ public class DungeonGame {
 			System.out.println("Eliga la Sala a ingresar");
 			int input_teclado = gameController.entrada_teclado(scanner, 0, lista_sala.size()-1); //Valida el Input del Usuario
 			System.out.println("Ingreso a la Sala " + input_teclado);
-			lista_sala.get(input_teclado).iniciar_enfrentamiento();
-			System.out.println("Enfrentamiento Terminado, listo para seguir");
+			boolean resultadoBatalla= lista_sala.get(input_teclado).iniciar_enfrentamiento();
+			
+			if (resultadoBatalla) {
+				System.out.println("Enfrentamiento Terminado, listo para seguir");
+			}
+			else {
+				System.out.println("## - Perdiste - ##");
+				break;
+			}
 		}
-		
-		System.out.println("!!!FELICITACIONES!!! Te Graduaste!!");
+		if (lista_heroes.size() > 0) {
+			System.out.println("!!!FELICITACIONES!!! Te Graduaste!!");
+		}
 	}
 	
 	private static List<Heroe> inicializarHeroes() {

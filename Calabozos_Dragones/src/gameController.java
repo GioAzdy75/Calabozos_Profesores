@@ -70,7 +70,7 @@ public class gameController {
 		case 1:
 			// Hacer que escoja entre Ataque Mele = 1 o Rango = 2
 			System.out.println("1- Ataque Mele , 2- Ataque Rango");
-			input_teclado = scanner.nextInt();
+			input_teclado = gameController.entrada_teclado(scanner, 1, 2);
 			switch (input_teclado) {
 				case 1:
 					System.out.println("#############################");
@@ -78,14 +78,10 @@ public class gameController {
 	                System.out.println("#############################");
 	                //Elegir al Esbirro a atacar
 	                System.out.println("##Escoja al Esbirro al que desee atacar##");
-	                input_teclado = scanner.nextInt();
+	                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
 	                esbirro = lista_esbirros.get(input_teclado - 1);
 	                esbirro.recibirDano(heroe.getAtaqueMele());
 	                System.out.println("#ataque con exito#");
-	                //Logica de quitarlo si se muere
-	                if (esbirro.getVida() == 0) {
-	                	lista_esbirros.remove(esbirro);
-	                }
 					break;
 				case 2:
 					System.out.println("#############################");
@@ -93,14 +89,10 @@ public class gameController {
 	                System.out.println("#############################");
 	                //Elegir al Esbirro a atacar
 	                System.out.println("##Escoja al Esbirro al que desee atacar##");
-	                input_teclado = scanner.nextInt();
+	                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
 	                esbirro = lista_esbirros.get(input_teclado - 1);
 	                esbirro.recibirDano(heroe.getAtaqueRango());
 	                System.out.println("#ataque con exito#");
-	                //Logica de quitarlo si se muere
-	                if (esbirro.getVida() == 0) {
-	                	lista_esbirros.remove(esbirro);
-	                }
 					break;
 			}
             break;
@@ -110,9 +102,6 @@ public class gameController {
             System.out.println("#############################");
             
             heroe.HabilidadEspecial(lista_esbirros);
-            break;
-        case 3:
-            System.out.println("No hacer Nada");
             break;
 		}
 	}
