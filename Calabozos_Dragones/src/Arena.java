@@ -72,7 +72,7 @@ public class Arena {
 	        System.out.println(heroe.getEstadisticasCriatura());
 	        System.out.println("-------");
 	        //Turno Heroes
-			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-No Hacer Nada ");
+			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-Usar Carta");
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);//Validador de entrada
 			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros);//Logica Turno Heroe
 			verificarVidaCriaturas(lista_esbirros);//Borra a los muertos

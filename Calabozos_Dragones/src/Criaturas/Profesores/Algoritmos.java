@@ -2,11 +2,10 @@ package Criaturas.Profesores;
 
 import java.util.List;
 import java.util.Random;
-
 import Criaturas.Heroe;
 import Criaturas.Profesor;
 
-public class Algoritmos extends Profesor {
+public class Algoritmos extends Profesor{
 	//Constructor
 	public Algoritmos(String nombre) {
 		super(nombre);

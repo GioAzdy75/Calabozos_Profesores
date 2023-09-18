@@ -19,7 +19,15 @@ public class DungeonGame {
 		//Inicializamos los Heroes
 		List<Heroe>lista_heroes = inicializarHeroes();
 		List<List<Arena>> calabozo = crear_niveles(lista_heroes);//Revisar si quito este parametro
+		//Inicializamos las caras
+		CartaLuchador carta_1 = new CartaLuchador();
+		CartaMago carta_2 = new CartaMago();
+		CartaTanke carta_3 = new CartaTanke();
 		
+		List<Carta> lista_cartas = new ArrayList<Carta>();
+		lista_cartas.add(carta_1);
+		lista_cartas.add(carta_2);
+		lista_cartas.add(carta_3);
 		
 		for (List<Arena> lista_sala : calabozo) {
 			int i = 0;

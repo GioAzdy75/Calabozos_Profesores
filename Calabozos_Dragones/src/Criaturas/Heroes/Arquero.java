@@ -1,7 +1,8 @@
 package Criaturas.Heroes;
 
 import java.util.List;
-import Criaturas.Esbirro;
+
+import Criaturas.Criatura;
 import Criaturas.Heroe;
 import Criaturas.Profesor;
 
@@ -22,7 +23,7 @@ public class Arquero extends Heroe {
 	}
 	
 	//Habilidad Especial Golpe con el doble de daño
-	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
 	}
 	
 	public void HabilidadEspecial(Profesor profesor) {

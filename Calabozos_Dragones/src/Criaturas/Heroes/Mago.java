@@ -1,7 +1,8 @@
 package Criaturas.Heroes;
 
 import java.util.List;
-import Criaturas.Esbirro;
+
+import Criaturas.Criatura;
 import Criaturas.Heroe;
 import Criaturas.Profesor;
 
@@ -23,13 +24,13 @@ public class Mago extends Heroe {
 	//Habilidad Especial Congelar
 	//Reduce el daño de todos los esbirros en un 30%
 	//Solo funciona con esbirros
-	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
 		System.out.println("Ventisca Feroz");
-		for (Esbirro esbirro : lista_esbirros) {
-			double danoEsbirro = esbirro.getAtaque() * 0.8;
+		for (Criatura criatura : lista_criaturas) {
+			double danoEsbirro = criatura.getAtaque() * 0.8;
 			System.out.println(danoEsbirro);
 			int nuevo_dano = (int) (danoEsbirro);
-			esbirro.setAtaque(nuevo_dano);
+			criatura.setAtaque(nuevo_dano);
 		}
 	}
 	

@@ -2,7 +2,8 @@ package Criaturas.Heroes;
 
 import java.util.List;
 import java.util.Scanner;
-import Criaturas.Esbirro;
+
+import Criaturas.Criatura;
 import Criaturas.Heroe;
 import Criaturas.Profesor;
 
@@ -23,15 +24,15 @@ public class Luchador extends Heroe {
 	}	
 	
 	//Habilidad Especial Golpe con el doble de daño
-	public void HabilidadEspecial(List<Esbirro>lista_esbirros) {
+	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
 		System.out.println("Golpe Furioso");
 		System.out.println("##Escoja al Esbirro al que desee atacar##");
 		Scanner scanner = new Scanner(System.in); //Scanner del teclado
 		int input_teclado = scanner.nextInt();
-		Esbirro esbirro = lista_esbirros.get(input_teclado - 1);
+		Criatura esbirro = lista_criaturas.get(input_teclado - 1);
 		esbirro.recibirDano(getAtaque() * 2);
 		if (esbirro.getVida() == 0) {
-        	lista_esbirros.remove(esbirro);
+			lista_criaturas.remove(esbirro);
         }
 	}
 	
