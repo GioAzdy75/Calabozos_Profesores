@@ -38,7 +38,7 @@ public class DungeonGame {
 			System.out.println("Eliga la Sala a ingresar");
 			int input_teclado = gameController.entrada_teclado(scanner, 0, lista_sala.size()-1); //Valida el Input del Usuario
 			System.out.println("Ingreso a la Sala " + input_teclado);
-			boolean resultadoBatalla= lista_sala.get(input_teclado).iniciar_enfrentamiento();
+			boolean resultadoBatalla= lista_sala.get(input_teclado).iniciar_enfrentamiento(lista_cartas);
 			
 			if (resultadoBatalla) {
 				System.out.println("Enfrentamiento Terminado, listo para seguir");

@@ -42,7 +42,7 @@ public class Arena {
 	    }
 	}
 	//Metodo para Iniciar Enfrentamiento dentro de la Sala
-	public boolean iniciar_enfrentamiento() {
+	public boolean iniciar_enfrentamiento(List<Carta> listaDeCartas) {
 		//Utilidades
 		Scanner scanner = new Scanner(System.in); //Scanner del teclado
 		Random random = new Random(); //variable Random
@@ -74,7 +74,7 @@ public class Arena {
 	        //Turno Heroes
 			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-Usar Carta");
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);//Validador de entrada
-			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros);//Logica Turno Heroe
+			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros,listaDeCartas);//Logica Turno Heroe
 			verificarVidaCriaturas(lista_esbirros);//Borra a los muertos
 			
 			//Revisar Estadisticas de vida
@@ -180,7 +180,7 @@ public class Arena {
 	
 	//Metodos Para Combate
 	//Combate Turno de Heroes
-		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros) {
+		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros,List<Carta> listaDeCartas) {
 			//Variables
 			Esbirro esbirro;
 			switch (input_teclado) {
@@ -220,6 +220,21 @@ public class Arena {
 	            
 	            heroe.HabilidadEspecial(lista_esbirros);
 	            break;
+	        case 3:
+				System.out.println("#############################");
+	            System.out.println("---- Menu de Cartas ---");
+	            System.out.println("#############################");
+	            
+	            System.out.println("|0|		Nombre		|		Descripcion		|");
+	            int i = 1;
+	            for (Carta carta : listaDeCartas) {
+	            	// Realiza operaciones comunes para todas las Criaturas
+	        		System.out.println("|"+i+"|	"+ carta.getNombre() +"		|"+carta.getDescripcion()+ " |");
+	        		i++;
+	        	};
+	        	System.out.println("- Elija una Carta -");
+	        	input_teclado = gameController.entrada_teclado(scanner, 1, listaDeCartas.size());
+				break;
 			}
 		}
 		//Combate Contra el Profesor
