@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import Criaturas.Esbirro;
+import Criaturas.Heroe;
+import Criaturas.Profesor;
+import Criaturas.Criatura;
+
 import java.util.Random;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +22,7 @@ public class Arena {
 	public Arena(String nuevoNombre,List<Heroe> lista_heroes,int cantidadEsbirros,Profesor profesor) {
 		this.nombre = nuevoNombre;
 		this.lista_heroes = lista_heroes;
-		this.lista_esbirros = gameController.crear_esbirros(cantidadEsbirros);
+		this.lista_esbirros = this.crear_esbirros(cantidadEsbirros);
 		this.profesor = profesor;
 	}
 	
@@ -68,7 +74,7 @@ public class Arena {
 	        //Turno Heroes
 			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-No Hacer Nada ");
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);//Validador de entrada
-			gameController.combateTurno(scanner, input_teclado, heroe, lista_esbirros);//Logica Turno Heroe
+			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros);//Logica Turno Heroe
 			verificarVidaCriaturas(lista_esbirros);//Borra a los muertos
 			
 			//Revisar Estadisticas de vida
@@ -82,7 +88,7 @@ public class Arena {
 			//Actualizamos La Interfaz Grafica
 			salaGUI.actualizarGUI();
 			//Turno Esbirros
-			gameController.combateTurnoEsbirro(random, lista_esbirros, lista_heroes, profesor);
+			combateTurnoEnemigo(random, lista_esbirros, lista_heroes, profesor);
 			//Revisamos la vida de Heroes
 			verificarVidaCriaturas(lista_heroes);
 			//Revisar Estadisticas de vida
@@ -110,6 +116,8 @@ public class Arena {
 			return false;
 		}
 		
+		//Actualizamos La Interfaz Grafica
+		salaGUI.actualizarGUI();
 		//Una vez terminado los esbirros se deben enfrentar al Profesor
 		System.out.println("Jefe Final");
 		while (!this.completado) {
@@ -132,10 +140,13 @@ public class Arena {
 			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-No Hacer Nada ");
 			//Validador de entrada
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);
-			gameController.combateTurno(scanner, input_teclado, heroe, profesor);
+			combateTurnoHeroe(scanner, input_teclado, heroe, profesor);
 			
 			//Comprobar vida Heroes
 			verificarVidaCriaturas(lista_heroes);
+			
+			//Actualizamos La Interfaz Grafica
+			salaGUI.actualizarGUI();
 			
 			//Revisar Estadisticas de vida
 			if (lista_heroes.isEmpty()) {
@@ -147,9 +158,13 @@ public class Arena {
 				return true;
 			}
 			//Turno Profesor
-			gameController.combateTurnoEsbirro(random, lista_heroes, profesor);
+			combateTurnoEnemigo(random, lista_heroes, profesor);
 			//Comprobar vida Heroes
 			verificarVidaCriaturas(lista_heroes);
+			
+			//Actualizamos La Interfaz Grafica
+			salaGUI.actualizarGUI();
+			
 			//Revisar Estadisticas de vida
 			if (lista_heroes.isEmpty()) {
 				return false;
@@ -160,5 +175,153 @@ public class Arena {
 				return true;
 			}
 		}
-		return false;	}
+		return false;
+	}
+	
+	//Metodos Para Combate
+	//Combate Turno de Heroes
+		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros) {
+			//Variables
+			Esbirro esbirro;
+			switch (input_teclado) {
+			case 1:
+				// Hacer que escoja entre Ataque Mele = 1 o Rango = 2
+				System.out.println("1- Ataque Mele , 2- Ataque Rango");
+				input_teclado = gameController.entrada_teclado(scanner, 1, 2);
+				switch (input_teclado) {
+					case 1:
+						System.out.println("#############################");
+		                System.out.println("Ataque Mele");
+		                System.out.println("#############################");
+		                //Elegir al Esbirro a atacar
+		                System.out.println("##Escoja al Esbirro al que desee atacar##");
+		                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
+		                esbirro = lista_esbirros.get(input_teclado - 1);
+		                esbirro.recibirDano(heroe.getAtaqueMele());
+		                System.out.println("#ataque con exito#");
+						break;
+					case 2:
+						System.out.println("#############################");
+		                System.out.println("Ataque Rango");
+		                System.out.println("#############################");
+		                //Elegir al Esbirro a atacar
+		                System.out.println("##Escoja al Esbirro al que desee atacar##");
+		                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
+		                esbirro = lista_esbirros.get(input_teclado - 1);
+		                esbirro.recibirDano(heroe.getAtaqueRango());
+		                System.out.println("#ataque con exito#");
+						break;
+				}
+	            break;
+	        case 2:
+	        	System.out.println("#############################");
+	            System.out.println("Ataque Especial");
+	            System.out.println("#############################");
+	            
+	            heroe.HabilidadEspecial(lista_esbirros);
+	            break;
+			}
+		}
+		//Combate Contra el Profesor
+		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,Profesor profesor) {
+			switch (input_teclado) {
+			case 1:
+				// Hacer que escoja entre Ataque Mele = 1 o Rango = 2
+				System.out.println("1- Ataque Mele , 2- Ataque Rango");
+				input_teclado = gameController.entrada_teclado(scanner, 1, 2);
+				switch (input_teclado) {
+					case 1:
+						System.out.println("#############################");
+		                System.out.println("Ataque Mele");
+		                System.out.println("#############################");
+		                profesor.recibirDano(heroe.getAtaqueMele());
+		                System.out.println("#ataque con exito#");
+						break;
+					case 2:
+						System.out.println("#############################");
+		                System.out.println("Ataque Rango");
+		                System.out.println("#############################");
+		                profesor.recibirDano(heroe.getAtaqueRango());
+		                System.out.println("#ataque con exito#");
+						break;
+				}
+	            break;
+	        case 2:
+	        	System.out.println("#############################");
+	            System.out.println("Ataque Especial");
+	            System.out.println("#############################");
+	            heroe.HabilidadEspecial(profesor);
+	            break;
+	        case 3:
+	            System.out.println("- No hacer Nada -");
+	            break;
+			}
+		}
+		
+		
+		//Turno Esbirros
+		private static void combateTurnoEnemigo(Random random,List<Esbirro> lista_esbirros,List<Heroe> lista_heroes,Profesor profesor) {
+			System.out.println("Rival decide hacer:");
+			int numeroAleatorio = random.nextInt(3) + 1;
+			switch (numeroAleatorio) {
+				case 1:
+					System.out.println("#############################");
+	                System.out.println("Ataque Mele");
+	                System.out.println("#############################");
+	                //Logica Ataque Enemigo
+	                //Esbirro Aleatorio
+	                numeroAleatorio = random.nextInt(lista_esbirros.size());
+	                int dano = lista_esbirros.get(0).getAtaque();
+	                //Heroe Aleatorio
+	                numeroAleatorio = random.nextInt(lista_heroes.size());
+	                lista_heroes.get(numeroAleatorio).recibirDano(dano);
+	                System.out.println("#ataque enemigo con exito#");
+	                break;
+	            case 2:
+	            	System.out.println("Ataque Especial del Jefe");
+	            	//Pensar logica para traer las habilidades especiales
+	            	profesor.HabilidadEspecial(lista_heroes);
+	            	break;
+	            case 3:
+	                System.out.println("No hacer Nada");
+	                break;
+			}
+		}
+		
+		//Turno Jefe
+		private static void combateTurnoEnemigo(Random random,List<Heroe> lista_heroes,Profesor profesor) {
+			System.out.println("Rival decide hacer:");
+			int numeroAleatorio = random.nextInt(3) + 1;
+			switch (numeroAleatorio) {
+				case 1:
+					System.out.println("#############################");
+	                System.out.println("Ataque Mele");
+	                System.out.println("#############################");;
+	                //Logica Ataque Enemigo
+	                int dano = profesor.getAtaque();
+	                //Heroe Aleatorio
+	                numeroAleatorio = random.nextInt(lista_heroes.size());
+	                lista_heroes.get(numeroAleatorio).recibirDano(dano);
+	                System.out.println("#ataque enemigo con exito#");     
+	                break;
+	            case 2:
+	            	System.out.println("Ataque Especial del Jefe");
+	            	//
+	            	profesor.HabilidadEspecial(lista_heroes);
+	            	break;
+	            case 3:
+	                System.out.println("No hacer Nada");
+	                break;
+			}
+		}
+		
+		//Metodo para crear Esbirros
+		private List<Esbirro> crear_esbirros(int cantidad) {
+			List<Esbirro> lista_esbirro = new ArrayList<Esbirro>();
+			for (int i = 1; i <=cantidad; i++) {
+				Esbirro esbirro = new Esbirro("Esbirro " + i);
+				lista_esbirro.add(esbirro);
+	        }
+			return lista_esbirro;
+		}
 }

@@ -1,3 +1,4 @@
+import Criaturas.Criatura;
 
 public class Carta {
 	private String nombre;

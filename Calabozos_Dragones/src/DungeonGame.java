@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Criaturas.Heroes.Arquero;
+import Criaturas.Heroes.Luchador;
+import Criaturas.Heroes.Mago;
+import Criaturas.Heroe;
+import Criaturas.Profesor;
+import Criaturas.Profesores.*;
+
 
 public class DungeonGame {
 	public static void main(String[] args) {
@@ -42,7 +49,7 @@ public class DungeonGame {
 		List<Heroe>lista_heroes = new ArrayList<Heroe>();
 		lista_heroes.add(new Luchador("Lc1"));
 		lista_heroes.add(new Luchador("Lc2"));
-		/*
+		
 		lista_heroes.add(new Luchador("Lc3"));
 		lista_heroes.add(new Luchador("Lc4"));
 		lista_heroes.add(new Mago("Mg1"));
@@ -51,7 +58,7 @@ public class DungeonGame {
 		lista_heroes.add(new Arquero("ArQ2"));
 		lista_heroes.add(new Arquero("ArQ3"));
 		lista_heroes.add(new Arquero("ArQ4"));
-		*/
+		
 		return lista_heroes;
 		
 	}
