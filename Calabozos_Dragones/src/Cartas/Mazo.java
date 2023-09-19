@@ -24,7 +24,7 @@ public class Mazo {
 	private static List<Carta> inicializarCartas() {
 		List<Carta>lista_cartas = new ArrayList<Carta>();
 
-		Carta carta1 = new Carta("Bibliofrafia interesante", "Aumenta el ataque básico del héroe en 10p y otorga 20p de energia adicional.", 0,20,10,20);
+		Carta carta1 = new Carta("Bibliofrafia interesante", "Aumenta el ataque al básico del héroe en 10p y otorga 20p de energia adicional.", 0,20,10,20);
 		Carta carta2 = new Carta("Exceso de cafeina", "Restaura 50p de energia pero reduce 30p de salud.", -30,0,50,0);
 		Carta carta3 = new Carta("Examen Final", "Aumenta el ataque 60p y disminuye la energia 60p", 0,60,-60,0);
 		Carta carta4 = new Carta("Recuperatorio", "Aumenta la vida 100p y consume 20p de energia", 100,0,0,20);

@@ -126,7 +126,7 @@ public class Sala {
 		
 		
 		//Interfaz Grafica
-		SalaGUI salaGUI = new SalaGUI(this,lista_heroes);
+		SalaGUI salaGUI = new SalaGUI(this,lista_heroes,mano);
 		//
 		
 		System.out.println("Inicia El Combate");

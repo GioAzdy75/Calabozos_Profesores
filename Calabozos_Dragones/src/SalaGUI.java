@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import Cartas.Carta;
 import Criaturas.Heroe;
 import Criaturas.Heroes.Arquero;
 import Criaturas.Heroes.Luchador;
@@ -37,14 +38,16 @@ public class SalaGUI extends JFrame implements ActionListener{
 	JPanel heroePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	JPanel esbirroPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	JPanel jefePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel cartaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	
 	private HashImagenesSrc hashimagenes = new HashImagenesSrc();
 	List<String> listaRutaImagenes;
 	
 	
 	Sala sala;
+	List<Carta> cartas;
 	
-	public SalaGUI(Sala sala,List<Heroe>lista_heroes){
+	public SalaGUI(Sala sala,List<Heroe>lista_heroes,List<Carta>cartas){
 		
 		// Crea un JLabel y configúralo para mostrar la imagen de fondo
         //JLabel backgroundLabel = new JLabel(new ImageIcon("src/fondoMazmorra.jpg"));
@@ -52,6 +55,7 @@ public class SalaGUI extends JFrame implements ActionListener{
 		
 		this.lista_heroes = lista_heroes;
 		this.sala = sala;
+		this.cartas = cartas;
 		this.listaRutaImagenes = hashimagenes.get(sala.getTipoSala());
 		
 		//Panel Heroe
@@ -106,6 +110,22 @@ public class SalaGUI extends JFrame implements ActionListener{
 		labelProfesor.setHorizontalTextPosition(SwingConstants.CENTER);
 		jefePanel.add(labelProfesor);
 		
+		
+		//Panel Cartas
+		cartaPanel.setBounds(50,450,300,100);
+		cartaPanel.setBorder(borde);
+		
+		for (Carta carta : this.cartas) {
+			JLabel label = new JLabel(carta.getNombre());
+			ImageIcon imageCarta = new ImageIcon("src/SPRITES/Carta.jpg");
+			ImageIcon imagenRedimensionadaIcon1 = redimensionarImagen(imageCarta,40,40);
+			label.setIcon(imagenRedimensionadaIcon1);
+			cartaPanel.add(label);
+		}
+		
+		//Imprimir Cartas
+		
+		this.add(cartaPanel);
         this.setResizable(false);
 		this.add(jefePanel);
 		//this.setContentPane(backgroundLabel);
