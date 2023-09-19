@@ -7,12 +7,17 @@ import Criaturas.Heroe;
 import Criaturas.Profesor;
 
 public class Geometria extends Profesor {
-	//Constructor
+	/**
+	 * Constructor
+	 * @param nombre : String
+	 */
 	public Geometria(String nombre) {
 		super(nombre);
 	}
 	
-	//Habilidad especial
+	/**
+	 * Reduce el dano y la vida en 10%
+	 */
 	public void HabilidadEspecial(List<? extends Criatura> lista_heroes) {
 		System.out.println("Superficies Cuadraticas");
 		for (Criatura heroe : lista_heroes) {

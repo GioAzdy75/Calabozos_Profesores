@@ -10,13 +10,14 @@ import Criaturas.Heroes.Mago;
 public class Jugador {
 	private List<Heroe> lista_heroes;
 	private Mazo mazo;
-	private int energia;
+	private int mana;
 	/**
 	 * Constructor de la clase
 	 */
 	public Jugador(){
 		this.lista_heroes = inicializarHeroes();
 		this.mazo = new Mazo();
+		this.mana = 100;
 	}
 	
 	/**
@@ -58,16 +59,17 @@ public class Jugador {
 	/**
 	 * @return the energia
 	 */
-	public int getEnergia() {
-		return energia;
+	public int getMana() {
+		return mana;
+	}
+	
+	/**
+	 * Establece el mana
+	 */
+	public void setMana(int newMana) {
+		this.mana = newMana;
 	}
 
-	/**
-	 * @param energia the energia to set
-	 */
-	public void setEnergia(int energia) {
-		this.energia = energia;
-	}
 }
 
 

@@ -12,12 +12,16 @@ public class Algoritmos extends Profesor{
 	public Algoritmos(String nombre) {
 		super(nombre);
 	}
-	//Habilidad especial
+	/**
+	 * Disminuye la vida de un heroe aleatorio en 30% y la vida de ese Heroe pasa en forma de daño al profesor
+	 */
 	public void HabilidadEspecial(List<? extends Criatura> lista_heroes) {
+		System.out.println("Hash Optimizado");
         Random random = new Random();
         int indiceAleatorio = random.nextInt(lista_heroes.size());
         Criatura hero = lista_heroes.get(indiceAleatorio);
         int nuevaVida = (int)(hero.getVida() * 0.70);
         hero.setVida(nuevaVida);
+        this.setAtaque(this.getAtaque() + nuevaVida);
 	}
 }

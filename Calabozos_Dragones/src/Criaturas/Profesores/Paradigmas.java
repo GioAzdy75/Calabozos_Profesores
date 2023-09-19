@@ -8,16 +8,20 @@ import Criaturas.Heroe;
 import Criaturas.Profesor;
 
 public class Paradigmas extends Profesor {
-	//Constructor
+	/**
+	 * Constructor
+	 * @param nombre : String
+	 */
 	public Paradigmas(String nombre) {
 		super(nombre);
 	}
-	//Habilidad especial
+	/**
+	 * Aumenta sus estadisticas en 60%
+	 */
 	public void HabilidadEspecial(List<? extends Criatura> lista_heroes) {
-        Random random = new Random();
-        int indiceAleatorio = random.nextInt(lista_heroes.size());
-        Criatura hero = lista_heroes.get(indiceAleatorio);
-        int nuevoDano = (int)(hero.getAtaque() * 0.60);
-        hero.setAtaque(nuevoDano);
+		System.out.println("- NAIN - ");
+		System.out.println("- Profes Aumenta sus estadisticas - ");
+        this.setAtaque((int)(this.getAtaque() * 0.6));
+        this.setVida((int)(this.getVida() * 0.6));
 	}
 }

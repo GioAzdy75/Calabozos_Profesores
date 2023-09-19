@@ -51,12 +51,29 @@ public class Sala {
 	    }
 	}
 	
+	/**
+	 * Imprime las criaturas
+	 * @param lista_heroes una List<Heroe>
+	 * @param lista_esbirros una List<Esbirro>
+	 */
 	private void imprimir_criaturas(List<Heroe> lista_heroes, List<Esbirro> lista_esbirros) {
 		//Muestra a los heroes y criaturas
 		System.out.println("--------------------------------------------------------");
 		gameController.estadisticasCriatura(lista_heroes);
 		System.out.println("		-------vs--------		");
 		gameController.estadisticasCriatura(lista_esbirros);
+		System.out.println("--------------------------------------------------------");
+	}
+	
+	private void imprimir_cartas(List<Carta> lista_cartas) {
+		System.out.println("--------------	Cartas	-------------------");
+		System.out.println("|	Nombre			|		Descripcion		|	Costo Mana	|");
+		int count = 1;
+		for (Carta carta : lista_cartas) {
+			System.out.println("|"+count+"|"+carta.getNombre()+ "		|" + carta.getDescripcion()+ "	|"+carta.getCostoMana()+"|");//Mejorar visualizacion en consola
+			count ++;
+		}
+		System.out.println("|6|	No	Usar Ninguna Carta");
 		System.out.println("--------------------------------------------------------");
 	}
 	
@@ -67,71 +84,30 @@ public class Sala {
 	 */
 	public boolean iniciar_enfrentamiento(Jugador jugador) {
 		//Variables
-		
 		List<Heroe>lista_heroes = jugador.getLista_heroes();
 		Mazo mazo = jugador.getMazo();
-		
 		//Utilidades
 		Scanner scanner = new Scanner(System.in); //Scanner del teclado
 		Random random = new Random(); //variable Random
 		int input_teclado;
-		
-		//imprimimos los heroes y la criatura
-		imprimir_criaturas(lista_heroes,lista_esbirros);
-		
 		//Extraer 5 cartas del deck
-		System.out.println("--------------	Cartas	-------------------");
-		System.out.println("|	Nombre			|" + "					Descripcion			");
-		int count = 1;
+		System.out.println("-Robamos 5 cartas del Deck-");
 		List<Carta> mano = mazo.robarCartas();
-		for (Carta carta : mano) {
-			System.out.println("|"+count+"|"+carta.getNombre()+ "		|" + carta.getDescripcion()+ "	|"+carta.getConsumoEnergia()+"|");//Mejorar visualizacion en consola
-			count ++;
-		}
-		System.out.println("|6|	No	Usar Ninguna Carta");//Mejorar visualizacion en consola
-		System.out.println("--------------------------------------------------------");
-		//Jugador decide si usar cartas
-		System.out.println("- Elija la carta que quiera Usar -");
-		input_teclado = gameController.entrada_teclado(scanner, 1, 6);
+		//Imprimimos los heroes y la criatura
+		//imprimir_criaturas(lista_heroes,lista_esbirros);
+		//Imprimimos las Cartas
+		//imprimir_cartas(mano);
 		
-		if (input_teclado <=5) {
-			//Verificamos que tenga energia el jugador para aplicar el efecto
-			while (jugador.getEnergia() < mano.get(input_teclado).getConsumoEnergia()) {
-				System.out.println("Elija otra carta, energia insuficiente");
-				input_teclado = gameController.entrada_teclado(scanner, 1, 6);
-				if (input_teclado == 6) {
-					break;
-				}
-			}
-		}
-		if (input_teclado <=5) {
-			Carta carta = mano.get(input_teclado - 1);
-			//Aplicamos los efectos de las cartas
-			System.out.println("Aplicar a aliado - 1 o a enemigo - 2");
-			input_teclado = gameController.entrada_teclado(scanner, 1, 2);
-			
-			switch (input_teclado) {
-				case 1:
-					System.out.println("Elija al Heroe que desea aplicar");
-					input_teclado = gameController.entrada_teclado(scanner, 1, lista_heroes.size());
-					carta.efecto(lista_heroes.get(input_teclado-1));
-					break;
-				case 2:
-					System.out.println("Elija al Esbirro que desea aplicar");
-					input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
-					carta.efecto(lista_esbirros.get(input_teclado-1));
-					break;
-			}
-		}
+		//Jugador decide si usar cartas
+		
 		
 		
 		//Interfaz Grafica
 		SalaGUI salaGUI = new SalaGUI(this,lista_heroes,mano);
 		//
+		System.out.println("-	Inicia El Enfrentamiento	-");
 		
-		System.out.println("Inicia El Combate");
-		
-		//Bucle de batalla Esbirros
+		//Bucle de batalla Heroe vs Esbirros
 		while (!this.completado) {
 			//Muestra a los heroes y criaturas
 			System.out.println("--------------------------------------------------------");
@@ -139,11 +115,67 @@ public class Sala {
 			System.out.println("		-------vs--------		");
 			gameController.estadisticasCriatura(lista_esbirros);
 			System.out.println("--------------------------------------------------------");
-			
-			// Validacion
-			
-			
+			//Muestra las cartas
+			imprimir_cartas(mano);
+			//Imprimimos el Mana del Jugador
+			System.out.println(" Mana del Jugador: "+ jugador.getMana());
+			//
+			System.out.println("-	Fase Cartas	-");
+			//Jugador decide si usar cartas
+			System.out.println("Elija:  1-Usar alguna carta 	2- Ninguna");
+			input_teclado = gameController.entrada_teclado(scanner,1, 2);
+			if (input_teclado == 1) {
+				System.out.println("- Elija la carta que quiera Usar -");
+				input_teclado = gameController.entrada_teclado(scanner, 1, 6);
+				if (input_teclado <=5) {
+					//Verificamos que tenga mana el jugador para aplicar el efecto
+					while (jugador.getMana() < mano.get(input_teclado - 1).getCostoMana()) {
+						System.out.println("Elija otra carta, mana insuficiente");
+						input_teclado = gameController.entrada_teclado(scanner, 1, 6);
+						if (input_teclado == 6) {
+							break;
+						}
+					}
+				}
+				if (input_teclado <=5) {
+					Carta carta = mano.get(input_teclado - 1);
+					//Aplicamos los costos de la carta al jugador
+					jugador.setMana(jugador.getMana() - carta.getCostoMana());
+					//Aplicamos los efectos de las cartas
+					System.out.println("Elija : 1-Aplicar a aliado  ,  2-Aplicar a Enemigo");
+					input_teclado = gameController.entrada_teclado(scanner, 1, 2);
+					switch (input_teclado) {
+						case 1:
+							System.out.println("Elija al Heroe que desea aplicar");
+							input_teclado = gameController.entrada_teclado(scanner, 1, lista_heroes.size());
+							carta.efecto(lista_heroes.get(input_teclado-1));
+							break;
+						case 2:
+							System.out.println("Elija al Esbirro que desea aplicar");
+							input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
+							carta.efecto(lista_esbirros.get(input_teclado-1));
+							break;
+					}
+				}
+				
+				
+				
+				//Revisar Estadisticas de vida
+				verificarVidaCriaturas(lista_esbirros);//Borra a los muertos
+				verificarVidaCriaturas(lista_heroes);//Borra a los muertos
+				if (lista_esbirros.isEmpty()){
+					System.out.println("-Esbirros Derrotados-");
+					break;
+				}
+				if (lista_heroes.isEmpty()) {
+					break;
+				}
+				
+				//Actualizamos La Interfaz Grafica
+				salaGUI.actualizarGUI();
+			}
 			//Elegir Heroe
+			System.out.println("-	Fase Combate	-");
 			System.out.println("##	Escoja Heroe con el que desee atacar	##");
 			//Validador de entrada
 	        input_teclado = gameController.entrada_teclado(scanner,1, lista_heroes.size());
@@ -155,7 +187,6 @@ public class Sala {
 	        //Turno Heroes
 			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-No hacer nada");
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);//Validador de entrada
-			
 			//Revisar si tiene Energia para habilidad Especial si es q la usa
 			while (heroe.getEnergia() < heroe.getConsumoHabilidadEspecial()) {
 				System.out.println("No tienes suficiente energia");

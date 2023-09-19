@@ -8,15 +8,24 @@ public class Carta {
 	private int modificadorVida;
 	private int modificadorEnergia;
 	private int modificadorAtaque;
-	private int consumoEnergia;
-
+	private int costoMana;
+	
+	/**
+	 * 
+	 * @param nombre : String
+	 * @param descripcion : String
+	 * @param modificadorVida : Integer
+	 * @param modificadorAtaque : Integer
+	 * @param modificadorEnergia : Integer
+	 * @param consumoEnergia : Integer
+	 */
 	public Carta(String nombre,String descripcion,int modificadorVida, int modificadorAtaque, int modificadorEnergia, int consumoEnergia) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.modificadorVida = modificadorVida;
 		this.modificadorEnergia = modificadorEnergia;
 		this.modificadorAtaque = modificadorAtaque;
-		this.consumoEnergia = consumoEnergia;
+		this.costoMana = consumoEnergia;
 
 	}
 
@@ -46,7 +55,7 @@ public class Carta {
 	 * Retorna el consumo de energia de la carta en un int
 	 * @return
 	 */
-	public int getConsumoEnergia() {
-		return consumoEnergia;
+	public int getCostoMana() {
+		return costoMana;
 	}
 }

@@ -59,9 +59,6 @@ public class HashImagenesSrc {
         heroes.add(src+"MAGO FUEGO.png");
         hashtable.put("Heroes", heroes);
         
-        
-        
-        System.out.println(hashtable.get("Algebra"));
     }
 	
     public List<String> get(String key) {

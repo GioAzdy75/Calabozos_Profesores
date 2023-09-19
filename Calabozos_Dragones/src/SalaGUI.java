@@ -83,7 +83,6 @@ public class SalaGUI extends JFrame implements ActionListener{
 		//esbirroPanel.setBackground(Color.gray);
 		esbirroPanel.setBounds(450,20,200,400);
 		esbirroPanel.setBorder(borde);
-		int i = 0;
 		for (Criatura criatura : this.sala.lista_esbirros) {
 			JLabel label = new JLabel(criatura.getEstadisticasCriatura());
 			//Logica Imagen
@@ -112,15 +111,18 @@ public class SalaGUI extends JFrame implements ActionListener{
 		
 		
 		//Panel Cartas
-		cartaPanel.setBounds(50,450,300,100);
+		cartaPanel.setBounds(50,430,700,120);
 		cartaPanel.setBorder(borde);
-		
+		int i = 1;
 		for (Carta carta : this.cartas) {
-			JLabel label = new JLabel(carta.getNombre());
+			JLabel label = new JLabel("|"+i+"|"+carta.getNombre()+"			|");
 			ImageIcon imageCarta = new ImageIcon("src/SPRITES/Carta.jpg");
 			ImageIcon imagenRedimensionadaIcon1 = redimensionarImagen(imageCarta,40,40);
+			label.setVerticalTextPosition(SwingConstants.BOTTOM);
+			label.setHorizontalTextPosition(SwingConstants.CENTER);
 			label.setIcon(imagenRedimensionadaIcon1);
 			cartaPanel.add(label);
+			i++;
 		}
 		
 		//Imprimir Cartas

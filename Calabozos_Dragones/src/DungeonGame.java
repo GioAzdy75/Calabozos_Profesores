@@ -99,7 +99,7 @@ public class DungeonGame {
 		
 		//Nivel 5
 		profesor_a = new Tesis("Profesora Marisa");
-		profesor_b = new Laburo("Jefe Laburo");
+		profesor_b = new Pasantias("Jefe Laburo");
 		//Creamos las Arenas
 		nivel_5.add(new Sala("Anfiteatro",5,profesor_a,"Tesis"));
 		nivel_5.add(new Sala("Sector Trabajo",2,profesor_b,"Pasantias"));
