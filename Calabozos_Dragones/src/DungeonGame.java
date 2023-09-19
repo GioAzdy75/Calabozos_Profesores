@@ -19,15 +19,10 @@ public class DungeonGame {
 		//Inicializamos los Heroes
 		List<Heroe>lista_heroes = inicializarHeroes();
 		List<List<Arena>> calabozo = crear_niveles(lista_heroes);//Revisar si quito este parametro
-		//Inicializamos las caras
-		CartaLuchador carta_1 = new CartaLuchador();
-		CartaMago carta_2 = new CartaMago();
-		CartaTanke carta_3 = new CartaTanke();
+		//Inicializamos las cartas
+		List<Carta>mazo_cartas = inicializarCartas();
+		List<Carta>mano_cartas = new ArrayList<Carta>(); //cartas del jugador
 		
-		List<Carta> lista_cartas = new ArrayList<Carta>();
-		lista_cartas.add(carta_1);
-		lista_cartas.add(carta_2);
-		lista_cartas.add(carta_3);
 		
 		for (List<Arena> lista_sala : calabozo) {
 			int i = 0;
@@ -38,7 +33,7 @@ public class DungeonGame {
 			System.out.println("Eliga la Sala a ingresar");
 			int input_teclado = gameController.entrada_teclado(scanner, 0, lista_sala.size()-1); //Valida el Input del Usuario
 			System.out.println("Ingreso a la Sala " + input_teclado);
-			boolean resultadoBatalla= lista_sala.get(input_teclado).iniciar_enfrentamiento(lista_cartas);
+			boolean resultadoBatalla= lista_sala.get(input_teclado).iniciar_enfrentamiento(mazo_cartas,mano_cartas);
 			
 			if (resultadoBatalla) {
 				System.out.println("Enfrentamiento Terminado, listo para seguir");
@@ -53,6 +48,8 @@ public class DungeonGame {
 		}
 	}
 	
+	//Método que inicializa a los héroes
+	//Retorna una lista con los héroes
 	private static List<Heroe> inicializarHeroes() {
 		List<Heroe>lista_heroes = new ArrayList<Heroe>();
 		lista_heroes.add(new Luchador("Lc1"));
@@ -71,6 +68,8 @@ public class DungeonGame {
 		
 	}
 	
+
+
 	private static List<List<Arena>> crear_niveles(List<Heroe>lista_heroes) {
 		//Variables Iniciales
 		Profesor profesor_a;
@@ -130,5 +129,35 @@ public class DungeonGame {
 		
 		return calabozo;
 		
+	}
+
+	private static List<Carta>inicializarCartas() {
+		List<Carta>lista_cartas = new ArrayList<Carta>();
+
+		//Carta 1
+		Carta carta1 = new Carta("Bibliofrafia interesante", "Aumenta el ataque básico del héroe en 10p y otorga 20p de energia adicional.", 0,20,10,20);
+		//Carta 2
+		Carta carta2 = new Carta("Exceso de cafeina", "Restaura 50p de energia pero reduce 30p de salud.", -30,0,50,0);
+		Carta carta3 = new Carta("Examen Final", "Aumenta el ataque 60p y disminuye la energia 60p", 0,60,-60,0);
+		Carta carta4 = new Carta("Recuperatorio", "Aumenta la vida 100p y consume 20p de energia", 100,0,0,20);
+		Carta carta5 = new Carta("Presentacion Aburrida", "Aburres a los enemigos, disminuye su poder de ataque 50p.", 0,50,0,10);
+		Carta carta6 = new Carta("Ir a Consulta", "Aumenta la vida 20p y disminuye energia en 5p", 20,20,-20,0);
+		Carta carta7 = new Carta("Recreo", "Tomas un recreo.Aumenta la vida en 10p.", 10,0,0,0);
+		Carta carta8 = new Carta("Maraton de estudio", "Aumenta la energia 30p permanentemente.", 0,0,30,0);
+		Carta carta9 = new Carta("Entregar Tp en el ultimo minuto", "Disminuye la vida del enemigo 80p", 0,-80,0,30);
+		Carta carta10 = new Carta("Cebar mate", "Aumenta la energia en 100p.", 0,0,100,0);
+
+		lista_cartas.add(carta1);
+		lista_cartas.add(carta2);
+		lista_cartas.add(carta3);
+		lista_cartas.add(carta4);
+		lista_cartas.add(carta5);
+		lista_cartas.add(carta6);
+		lista_cartas.add(carta7);
+		lista_cartas.add(carta8);
+		lista_cartas.add(carta9);
+		lista_cartas.add(carta10);
+		
+		return lista_cartas;
 	}
 }

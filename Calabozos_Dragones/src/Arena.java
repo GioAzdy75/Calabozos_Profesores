@@ -42,7 +42,7 @@ public class Arena {
 	    }
 	}
 	//Metodo para Iniciar Enfrentamiento dentro de la Sala
-	public boolean iniciar_enfrentamiento(List<Carta> listaDeCartas) {
+	public boolean iniciar_enfrentamiento(List<Carta> mazo_cartas, List<Carta> mano_cartas) {
 		//Utilidades
 		Scanner scanner = new Scanner(System.in); //Scanner del teclado
 		Random random = new Random(); //variable Random
@@ -50,7 +50,9 @@ public class Arena {
 		boolean combate_on = true;
 		//Interfaz Grafica
 		SalaGUI salaGUI = new SalaGUI(this);
-		//
+		
+		//Seleccion de Cartas
+
 		
 		System.out.println("Inicia El Combate");
 		
@@ -74,7 +76,7 @@ public class Arena {
 	        //Turno Heroes
 			System.out.println("Eliga: 1-Ataque Basico , 2-Habilidad Especial , 3-Usar Carta");
 			input_teclado = gameController.entrada_teclado(scanner, 1, 3);//Validador de entrada
-			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros,listaDeCartas);//Logica Turno Heroe
+			combateTurnoHeroe(scanner, input_teclado, heroe, lista_esbirros,mano_cartas);//Logica Turno Heroe
 			verificarVidaCriaturas(lista_esbirros);//Borra a los muertos
 			
 			//Revisar Estadisticas de vida
@@ -177,10 +179,35 @@ public class Arena {
 		}
 		return false;
 	}
-	
+
+
+	//Metodo para Otorgar Cartas
+	private static void repartirCartas(Scanner scanner,List<Carta>mazo_cartas, List<Carta>mano_cartas){
+		
+		List<Carta> cartasSeleccionadas = new ArrayList<Carta>();
+
+		//Selecciona 2 cartas aleatorias del mazo
+		for (int i = 0; i < 2 ; i++){
+			Carta carta = mazo_cartas.remove(0);
+			cartasSeleccionadas.add(carta);
+		}
+
+		//Muestra las cartas al usuario
+		System.out.println("Se ha revelado un botín para su viaje");
+		System.out.println("Cartas seleccionadas:");
+	    int i = 1;
+		System.out.println("|"+0+"|	No remplazar cartas	|");
+	    for (Carta carta : cartasSeleccionadas) {
+	        System.out.println("|"+i+"|	"+ carta.getNombre() +"		|"+carta.getDescripcion()+ " |");
+	        i++;
+	    };
+		System.out.print("¿Desea reemplazar una, dos o ninguna carta? (0, 1, 2): ");
+		int input_teclado = gameController.entrada_teclado(scanner, 0, 2);
+
+	}
 	//Metodos Para Combate
 	//Combate Turno de Heroes
-		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros,List<Carta> listaDeCartas) {
+		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros,List<Carta> mano_cartas) {
 			//Variables
 			Esbirro esbirro;
 			switch (input_teclado) {
@@ -227,13 +254,33 @@ public class Arena {
 	            
 	            System.out.println("|0|		Nombre		|		Descripcion		|");
 	            int i = 1;
-	            for (Carta carta : listaDeCartas) {
+	            for (Carta carta : mano_cartas) {
 	            	// Realiza operaciones comunes para todas las Criaturas
 	        		System.out.println("|"+i+"|	"+ carta.getNombre() +"		|"+carta.getDescripcion()+ " |");
 	        		i++;
 	        	};
 	        	System.out.println("- Elija una Carta -");
-	        	input_teclado = gameController.entrada_teclado(scanner, 1, listaDeCartas.size());
+	        	input_teclado = gameController.entrada_teclado(scanner, 1, mano_cartas.size());
+				Carta carta_elegida = mano_cartas.get(input_teclado - 1);
+				System.out.println("Seleccione a quien lanzar la carta");
+	        	input_teclado = gameController.entrada_teclado(scanner, 1, 2);
+				switch(input_teclado){
+					case 1:
+						//usar efecto en si mismo
+						break;
+					case 2:
+		                System.out.println("##Escoja a que enemigo lanzar carta##");
+		                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
+		                esbirro = lista_esbirros.get(input_teclado - 1);
+						//usar efecto de carta sobre esbirro o profesor
+						break;
+				}
+
+				//aca va la logica para el uso de carta
+				/*tomar el indice de la lista de cartas
+				 * seleccionar que enemigo o aliado aplicar
+				 * llamar al efecto de la carta
+				 */
 				break;
 			}
 		}
