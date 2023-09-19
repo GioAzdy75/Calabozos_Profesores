@@ -6,25 +6,32 @@ import Criaturas.Criatura;
 import Criaturas.Heroe;
 import Criaturas.Profesor;
 
+/**
+ * Esta clase modela el tipo de Heroe Mago
+ */
 public class Mago extends Heroe {
+	/**
+	 * Constructor de la clase
+	 * @param nombre nombre del mago
+	 */
 	public Mago(String nombre) {
 		super(nombre); // nombre = nombre
-		imageSrc = "magofuego.png";
+		this.consumoHabilidadEspecial = 20;
 	}
 	
-	//Ataque Mele
 	public int getAtaqueMele() {
 		return this.getAtaque()/4;
 	}
-	//Ataque Rango
+	
 	public int getAtaqueRango() {
 		return (int) (this.getAtaque());
 	}
 	
-	//Habilidad Especial Congelar
-	//Reduce el daño de todos los esbirros en un 30%
-	//Solo funciona con esbirros
+	/**
+	 * Reduce el daño de todos los esbirros en un 30%
+	 */
 	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
+		this.setEnergia(this.getEnergia()-this.getConsumoHabilidadEspecial());
 		System.out.println("Ventisca Feroz");
 		for (Criatura criatura : lista_criaturas) {
 			double danoEsbirro = criatura.getAtaque() * 0.8;
@@ -34,6 +41,10 @@ public class Mago extends Heroe {
 		}
 	}
 	
+	/**
+	 * Reduce el 15% de la vida del Profesor
+	 * @param profesor profesor al que se le aplica el efecto
+	 */
 	public void HabilidadEspecial(Profesor profesor) {
 		profesor.recibirDano((int)(getVida()* 0.15));
 	}

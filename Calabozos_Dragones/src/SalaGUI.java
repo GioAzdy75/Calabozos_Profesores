@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,8 +17,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import Criaturas.Heroe;
+import Criaturas.Heroes.Arquero;
+import Criaturas.Heroes.Luchador;
+import Criaturas.Heroes.Mago;
 import Criaturas.Criatura;
 
 import java.util.Random;
@@ -29,32 +34,40 @@ public class SalaGUI extends JFrame implements ActionListener{
 	List<JLabel> labels_esbirros = new ArrayList<JLabel>();
 	JLabel labelProfesor = new JLabel();
 	
-	JPanel heroePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-	JPanel esbirroPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel heroePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+	JPanel esbirroPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	JPanel jefePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	
-	Arena arena;
+	private HashImagenesSrc hashimagenes = new HashImagenesSrc();
+	List<String> listaRutaImagenes;
 	
-	public SalaGUI(Arena arena){
+	
+	Sala sala;
+	
+	public SalaGUI(Sala sala,List<Heroe>lista_heroes){
 		
 		// Crea un JLabel y configúralo para mostrar la imagen de fondo
         //JLabel backgroundLabel = new JLabel(new ImageIcon("src/fondoMazmorra.jpg"));
         //backgroundLabel.setLayout(new BorderLayout());
-
-		String directorioActual = System.getProperty("user.dir");
 		
-		this.arena = arena;
+		this.lista_heroes = lista_heroes;
+		this.sala = sala;
+		this.listaRutaImagenes = hashimagenes.get(sala.getTipoSala());
+		
 		//Panel Heroe
 		
 		//heroePanel.setBackground(Color.red);
-		heroePanel.setBounds(10,100,400,500);
+		heroePanel.setBounds(1,20,450,400);
 		heroePanel.setOpaque(false); // Hace que el panel sea transparente
-
-		for (Criatura criatura : this.arena.lista_heroes) {
+		Border borde = BorderFactory.createLineBorder(Color.RED, 2);
+	        
+	     // Aplica el borde al JPanel
+		heroePanel.setBorder(borde);
+		for (Criatura criatura : lista_heroes) {
 			JLabel label = new JLabel(criatura.getEstadisticasCriatura());
 			//Logica Imagen
-			ImageIcon imageHeroe = new ImageIcon("src/sprites/"+criatura.imageSrc);
-			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe);
+			ImageIcon imageHeroe = new ImageIcon(heroeSrc(criatura));
+			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe,80,80);
 			//
 			label.setIcon(imagenRedimensionadaIcon);
 			heroePanel.add(label);
@@ -64,13 +77,15 @@ public class SalaGUI extends JFrame implements ActionListener{
 		//Panel Enemigos
 		
 		//esbirroPanel.setBackground(Color.gray);
-		esbirroPanel.setBounds(350,100,250,500);
-		
-		for (Criatura criatura : this.arena.lista_esbirros) {
+		esbirroPanel.setBounds(450,20,200,400);
+		esbirroPanel.setBorder(borde);
+		int i = 0;
+		for (Criatura criatura : this.sala.lista_esbirros) {
 			JLabel label = new JLabel(criatura.getEstadisticasCriatura());
 			//Logica Imagen
-			ImageIcon imageHeroe = new ImageIcon("src/sprites/"+criatura.imageSrc);
-			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe);
+			ImageIcon imageHeroe = new ImageIcon(listaRutaImagenes.get(0));
+			
+			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe,50,50);
 			//
 			label.setIcon(imagenRedimensionadaIcon);
 			esbirroPanel.add(label);
@@ -78,11 +93,12 @@ public class SalaGUI extends JFrame implements ActionListener{
 		}
 		
 		//Panel Jefe
-		jefePanel.setBackground(Color.green);
-		jefePanel.setBounds(580,50,190,100);
-		labelProfesor.setText(arena.profesor.getEstadisticasCriatura());
-		ImageIcon imageProfesor = new ImageIcon("src/sprites/"+arena.profesor.imageSrc);
-		ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageProfesor);
+		//jefePanel.setBackground(Color.green);
+		jefePanel.setBounds(650,20,200,300);
+		jefePanel.setBorder(borde);
+		labelProfesor.setText(sala.profesor.getEstadisticasCriatura());
+		ImageIcon imageProfesor = new ImageIcon(listaRutaImagenes.get(1));
+		ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageProfesor,100,150);
 		labelProfesor.setIcon(imagenRedimensionadaIcon);
 		
         // Configura la posición vertical y horizontal del texto
@@ -96,7 +112,7 @@ public class SalaGUI extends JFrame implements ActionListener{
 		this.add(heroePanel);
 		this.add(esbirroPanel);
 		this.setLayout(null);
-		this.setSize(800,650);
+		this.setSize(900,600);
 		this.setVisible(true);
 	}
 	
@@ -108,14 +124,17 @@ public class SalaGUI extends JFrame implements ActionListener{
 		*/
 	}
 	
-	private ImageIcon redimensionarImagen(ImageIcon image) {
+	/**
+	 * Metodo para redimensionar la imagen a un tamaño establecido de 50x50
+	 * @param image : ImageIcon 
+	 * @return ImageIcon : con el tamaño establecido
+	 */
+	private ImageIcon redimensionarImagen(ImageIcon image,int ancho,int largo) {
 		// Obtener la imagen de ImageIcon
 		Image imagenOriginal = image.getImage();
 
 		// Redimensionar la imagen a un tamaño específico
-		int nuevoAncho = 50; // Cambia esto al ancho deseado
-		int nuevoAlto = 50; // Cambia esto al alto deseado
-		Image imagenRedimensionada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+		Image imagenRedimensionada = imagenOriginal.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
 
 		// Crear un ImageIcon a partir de la imagen redimensionada
 		ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
@@ -123,20 +142,20 @@ public class SalaGUI extends JFrame implements ActionListener{
 		return imagenRedimensionadaIcon;
 	}
 	
-	// Método para actualizar los valores de los JLabels
+	/**
+	 * Actualiza los Jlabel de la interfaz grafica con las nuevas estadisticas
+	 */
     public void actualizarGUI() {
-    	
-
         //Actualizar Heroes
         for (JLabel label : labels_heroes) {
         	heroePanel.remove(label);
         }
         labels_heroes.clear();
-        for (Criatura criatura : this.arena.lista_heroes) {
+        for (Criatura criatura : lista_heroes) {
 			JLabel label = new JLabel(criatura.getEstadisticasCriatura());
 			//Logica Imagen
-			ImageIcon imageHeroe = new ImageIcon("src/sprites/"+criatura.imageSrc);
-			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe);
+			ImageIcon imageHeroe = new ImageIcon(heroeSrc(criatura));
+			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe,80,80);
 			//
 			label.setIcon(imagenRedimensionadaIcon);
 			heroePanel.add(label);
@@ -148,11 +167,11 @@ public class SalaGUI extends JFrame implements ActionListener{
         	esbirroPanel.remove(label);
         }
         labels_esbirros.clear();
-        for (Criatura criatura : this.arena.lista_esbirros) {
+        for (Criatura criatura : this.sala.lista_esbirros) {
 			JLabel label = new JLabel(criatura.getEstadisticasCriatura());
 			//Logica Imagen
-			ImageIcon imageHeroe = new ImageIcon("src/sprites/"+criatura.imageSrc);
-			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe);
+			ImageIcon imageHeroe = new ImageIcon(listaRutaImagenes.get(0));
+			ImageIcon imagenRedimensionadaIcon = redimensionarImagen(imageHeroe,50,50);
 			//
 			label.setIcon(imagenRedimensionadaIcon);
 			esbirroPanel.add(label);
@@ -165,7 +184,27 @@ public class SalaGUI extends JFrame implements ActionListener{
         esbirroPanel.repaint();
     }
     
+    /**
+     * Metodo para cerrar la ventana
+     */
     public void cerrarVentana() {
         dispose(); // Cierra la ventana
+    }
+
+    
+    private String heroeSrc(Object objeto) {
+    	if (objeto instanceof Luchador) {
+    		return hashimagenes.get("Heroes").get(0);
+    	}
+    	else if (objeto instanceof Arquero){
+    		return hashimagenes.get("Heroes").get(1);
+    	}
+    	
+    	else if (objeto instanceof Mago){
+    		return hashimagenes.get("Heroes").get(2);
+    	}
+    	else {
+    		return "";
+    	}
     }
 }

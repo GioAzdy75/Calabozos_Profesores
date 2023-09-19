@@ -2,15 +2,16 @@ package Criaturas;
 
 import java.util.List;
 
-//Clase base para Profesores
-public class Profesor extends Criatura {
-	//Constructor
+/**
+ * Clase Base para los Profesores
+ */
+public abstract class Profesor extends Criatura implements IHabilidadEspecialMultipleObjetivo<Criatura> {
+	/**
+	 * Constructor de la clase
+	 * @param nombre nombre de la criatura
+	 */
 	public Profesor(String nombre) {
 		super(nombre, 300, 500, 100);
 	}
 	
-	//Habilidad Especial
-	public void HabilidadEspecial(List<Heroe>lista_heroes) {
-		
-	}
 }
