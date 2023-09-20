@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Cartas.Mazo;
+import Criaturas.Criatura;
 import Criaturas.Heroe;
 import Criaturas.Heroes.Arquero;
 import Criaturas.Heroes.Luchador;
 import Criaturas.Heroes.Mago;
 
 public class Jugador {
-	private List<Heroe> lista_heroes;
+	private List<Criatura> lista_heroes;
 	private Mazo mazo;
 	private int mana;
 	/**
@@ -24,7 +25,7 @@ public class Jugador {
 	 * Devuelve la lista_heroes
 	 * @return List<Heroes> lista_heroes
 	 */
-	public List<Heroe> getLista_heroes() {
+	public List<Criatura> getLista_heroes() {
 		return lista_heroes;
 	}
 	
@@ -40,8 +41,8 @@ public class Jugador {
 	 * Metodo para inicializar los Heroes 
 	 * @return lista de tipo Heroe
 	 */
-	private static List<Heroe> inicializarHeroes() {
-		List<Heroe>lista_heroes = new ArrayList<Heroe>();
+	private static List<Criatura> inicializarHeroes() {
+		List<Criatura>lista_heroes = new ArrayList<Criatura>();
 		lista_heroes.add(new Luchador("Lc1"));
 		lista_heroes.add(new Luchador("Lc2"));
 		lista_heroes.add(new Luchador("Lc3"));

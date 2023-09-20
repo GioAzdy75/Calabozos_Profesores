@@ -30,7 +30,7 @@ import java.util.Random;
 
 public class SalaGUI extends JFrame implements ActionListener{
 	JLabel label;
-	List<Heroe>lista_heroes = new ArrayList<Heroe>();
+	List<Criatura>lista_heroes = new ArrayList<Criatura>();
 	List<JLabel> labels_heroes = new ArrayList<JLabel>();
 	List<JLabel> labels_esbirros = new ArrayList<JLabel>();
 	JLabel labelProfesor = new JLabel();
@@ -47,7 +47,7 @@ public class SalaGUI extends JFrame implements ActionListener{
 	Sala sala;
 	List<Carta> cartas;
 	
-	public SalaGUI(Sala sala,List<Heroe>lista_heroes,List<Carta>cartas){
+	public SalaGUI(Sala sala,List<Criatura>lista_heroes,List<Carta>cartas){
 		
 		// Crea un JLabel y configúralo para mostrar la imagen de fondo
         //JLabel backgroundLabel = new JLabel(new ImageIcon("src/fondoMazmorra.jpg"));

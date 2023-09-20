@@ -30,7 +30,7 @@ public class Mago extends Heroe {
 	/**
 	 * Reduce el daño de todos los esbirros en un 30%
 	 */
-	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
+	public void HabilidadEspecial(List<Criatura> lista_criaturas) {
 		this.setEnergia(this.getEnergia()-this.getConsumoHabilidadEspecial());
 		System.out.println("Ventisca Feroz");
 		for (Criatura criatura : lista_criaturas) {

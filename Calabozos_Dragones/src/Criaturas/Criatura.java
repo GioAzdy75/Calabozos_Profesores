@@ -48,6 +48,9 @@ public abstract class Criatura {
 	  */
 	 public void setAtaque(int attack) {
 		 this.ataque = attack;
+		 if ((attack)<= 0){
+			 this.ataque = 0;
+		 }
 	 }
 	 
 	 /**
@@ -64,6 +67,9 @@ public abstract class Criatura {
 	  */
 	 public void setVida(int vida) {
 		 this.vida = vida;
+		 if ((vida)<= 0){
+			 this.vida = 0;
+		 }
 	 }
 	 
 	 /**
@@ -80,8 +86,15 @@ public abstract class Criatura {
 	  */
 	 public void setEnergia(int nuevaEnergia) {
 		 this.energia = nuevaEnergia;
+		 if ((nuevaEnergia)<= 0){
+			 this.energia = 0;
+		 }
 	 }
 	 
+	 /**
+	  * Recibe el daño que se le pasa
+	  * @param dano
+	  */
 	 public void recibirDano(int dano) {
 		 this.vida -= dano;
 		 if (this.vida <= 0){

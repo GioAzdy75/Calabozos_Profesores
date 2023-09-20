@@ -15,7 +15,7 @@ import java.util.Iterator;
 
 public class Sala {
 	private String nombre;
-	List<Esbirro>lista_esbirros = new ArrayList<Esbirro>();
+	List<Criatura>lista_esbirros = new ArrayList<Criatura>();
 	Profesor profesor;
 	private boolean completado = false;
 	private String tipoSala;
@@ -84,7 +84,7 @@ public class Sala {
 	 */
 	public boolean iniciar_enfrentamiento(Jugador jugador) {
 		//Variables
-		List<Heroe>lista_heroes = jugador.getLista_heroes();
+		List<Criatura>lista_heroes = jugador.getLista_heroes();
 		Mazo mazo = jugador.getMazo();
 		//Utilidades
 		Scanner scanner = new Scanner(System.in); //Scanner del teclado
@@ -141,6 +141,8 @@ public class Sala {
 					Carta carta = mano.get(input_teclado - 1);
 					//Aplicamos los costos de la carta al jugador
 					jugador.setMana(jugador.getMana() - carta.getCostoMana());
+					//borramos la carta de la mano
+					mano.remove(carta);
 					//Aplicamos los efectos de las cartas
 					System.out.println("Elija : 1-Aplicar a aliado  ,  2-Aplicar a Enemigo");
 					input_teclado = gameController.entrada_teclado(scanner, 1, 2);
@@ -170,6 +172,8 @@ public class Sala {
 				if (lista_heroes.isEmpty()) {
 					break;
 				}
+				
+				
 				
 				//Actualizamos La Interfaz Grafica
 				salaGUI.actualizarGUI();
@@ -302,7 +306,7 @@ public class Sala {
 	
 	//Metodos Para Combate
 	//Combate Turno de Heroes
-		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Esbirro>lista_esbirros) {
+		private static void combateTurnoHeroe(Scanner scanner,int input_teclado,Heroe heroe,List<Criatura>lista_esbirros) {
 			//Variables
 			Esbirro esbirro;
 			switch (input_teclado) {
@@ -318,7 +322,7 @@ public class Sala {
 		                //Elegir al Esbirro a atacar
 		                System.out.println("##Escoja al Esbirro al que desee atacar##");
 		                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
-		                esbirro = lista_esbirros.get(input_teclado - 1);
+		                esbirro = (Esbirro) lista_esbirros.get(input_teclado - 1);
 		                esbirro.recibirDano(heroe.getAtaqueMele());
 		                System.out.println("#ataque con exito#");
 						break;
@@ -329,7 +333,7 @@ public class Sala {
 		                //Elegir al Esbirro a atacar
 		                System.out.println("##Escoja al Esbirro al que desee atacar##");
 		                input_teclado = gameController.entrada_teclado(scanner, 1, lista_esbirros.size());
-		                esbirro = lista_esbirros.get(input_teclado - 1);
+		                esbirro = (Esbirro) lista_esbirros.get(input_teclado - 1);
 		                esbirro.recibirDano(heroe.getAtaqueRango());
 		                System.out.println("#ataque con exito#");
 						break;
@@ -384,7 +388,7 @@ public class Sala {
 		
 		
 		//Turno Esbirros
-		private static void combateTurnoEnemigo(Random random,List<Esbirro> lista_esbirros,List<Heroe> lista_heroes,Profesor profesor) {
+		private static void combateTurnoEnemigo(Random random,List<Criatura> lista_esbirros,List<Criatura> lista_heroes,Profesor profesor) {
 			System.out.println("Rival decide hacer:");
 			int numeroAleatorio = random.nextInt(3) + 1;
 			switch (numeroAleatorio) {
@@ -404,7 +408,14 @@ public class Sala {
 	            case 2:
 	            	System.out.println("Ataque Especial del Jefe");
 	            	//Pensar logica para traer las habilidades especiales
-	            	profesor.HabilidadEspecial(lista_heroes);
+	            	//Colaborativo
+	            	if (profesor.getColaborativo()) {
+	            		profesor.HabilidadEspecial(lista_esbirros);
+	            	}
+	            	else {
+	            		profesor.HabilidadEspecial(lista_heroes);
+	            	}
+	            	
 	            	break;
 	            case 3:
 	                System.out.println("No hacer Nada");
@@ -413,7 +424,7 @@ public class Sala {
 		}
 		
 		//Turno Jefe
-		private static void combateTurnoEnemigo(Random random,List<Heroe> lista_heroes,Profesor profesor) {
+		private static void combateTurnoEnemigo(Random random,List<Criatura> lista_heroes,Profesor profesor) {
 			System.out.println("Rival decide hacer:");
 			int numeroAleatorio = random.nextInt(3) + 1;
 			switch (numeroAleatorio) {
@@ -431,7 +442,13 @@ public class Sala {
 	            case 2:
 	            	System.out.println("Ataque Especial del Jefe");
 	            	//
-	            	profesor.HabilidadEspecial(lista_heroes);
+	            	if (profesor.getColaborativo()) {
+	            		List<Criatura> lista_vacia = new ArrayList<Criatura>();
+	            		profesor.HabilidadEspecial(lista_vacia);
+	            	}
+	            	else {
+	            		profesor.HabilidadEspecial(lista_heroes);
+	            	}
 	            	break;
 	            case 3:
 	                System.out.println("No hacer Nada");
@@ -440,8 +457,8 @@ public class Sala {
 		}
 		
 		//Metodo para crear Esbirros
-		private List<Esbirro> crear_esbirros(int cantidad) {
-			List<Esbirro> lista_esbirro = new ArrayList<Esbirro>();
+		private List<Criatura> crear_esbirros(int cantidad) {
+			List<Criatura> lista_esbirro = new ArrayList<Criatura>();
 			for (int i = 1; i <=cantidad; i++) {
 				Esbirro esbirro = new Esbirro("Esbirro " + i);
 				lista_esbirro.add(esbirro);

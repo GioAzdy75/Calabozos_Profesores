@@ -70,9 +70,9 @@ public class DungeonGame {
 		
 		//Nivel 1
 		//Inicializamos los Jefes
-		profesor_a = new Analisis("Profesor Ochoa");
-		profesor_b = new Algebra("Profesora Noemi");
-		profesor_c = new Geometria("Profesor Videla");
+		profesor_a = new ProfeAnalisis("Profesor Ochoa");
+		profesor_b = new ProfeAlgebra("Profesora Noemi");
+		profesor_c = new ProfeGeometria("Profesor Videla");
 		//Creamos las Arenas
 		nivel_1.add(new Sala("Sala Analisis I",5,profesor_a,"Analisis"));
 		nivel_1.add(new Sala("Sala Algebra",3,profesor_b,"Algebra"));
@@ -80,26 +80,27 @@ public class DungeonGame {
 		
 		//Nivel 2
 		//Inicializamos los Jefes
-		profesor_a = new Algoritmos("Profesor Jorch");
-		profesor_b = new Paradigmas("Profesor Pablo");
+		profesor_a = new ProfeAlgoritmos("Profesor Jorch");
+		profesor_b = new ProfeParadigmas("Profesor Pablo");
 		//Creamos las Arenas
 		nivel_2.add(new Sala("Sala Algoritmos y Estructura de Datos",5,profesor_a,"Algoritmos"));
 		nivel_2.add(new Sala("Sala Paradigmas de la Programacion",2,profesor_b,"Paradigmas"));
 		
 		//Nivel 3
 		//Inicializamos los Jefes
-		profesor_a = new InteligenciaArtificial("Profesor Harpo");
+		profesor_a = new ProfeInteligenciaArtificial("Profesor Harpo");
+		profesor_b = new ProfeArquitectura("Profesor Osvaldo");
 		//Creamos las Arenas
 		nivel_3.add(new Sala("Sala Inteligencia Artificial",5,profesor_a,"InteligenciaArtificial"));
-		
+		nivel_3.add(new Sala("Sala Arquitectura",3,profesor_b,"Arquitectura"));
 		//Nivel 4
-		profesor_a = new Compiladores("Profesora Carolina");
+		profesor_a = new ProfeCompiladores("Profesora Carolina");
 		//Creamos las Arenas
 		nivel_4.add(new Sala("Sala Compiladores",5,profesor_a,"Compiladores"));
 		
 		//Nivel 5
-		profesor_a = new Tesis("Profesora Marisa");
-		profesor_b = new Pasantias("Jefe Laburo");
+		profesor_a = new ProfeTesis("Profesora Marisa");
+		profesor_b = new ProfePasantias("Jefe Laburo");
 		//Creamos las Arenas
 		nivel_5.add(new Sala("Anfiteatro",5,profesor_a,"Tesis"));
 		nivel_5.add(new Sala("Sector Trabajo",2,profesor_b,"Pasantias"));

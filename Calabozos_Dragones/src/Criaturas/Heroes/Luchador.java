@@ -32,7 +32,7 @@ public class Luchador extends Heroe {
 	/**
 	 * Golpe con el doble de daño hacia una lista de Criaturas
 	 */
-	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
+	public void HabilidadEspecial(List<Criatura> lista_criaturas) {
 		this.setEnergia(this.getEnergia()-this.getConsumoHabilidadEspecial());
 		
 		System.out.println("Golpe Furioso");

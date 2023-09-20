@@ -23,7 +23,7 @@ public class HashImagenesSrc {
         algoritmosSrc.add(src + "Algoritmos/PYTHON_ESBIRROS.png");
         algoritmosSrc.add(src + "Algoritmos/Gorra.png");
         List<String> paradigmasSrc = new ArrayList<String>();
-        paradigmasSrc.add(src + "Paradigmas/Bauti ESBIRRO.png");
+        paradigmasSrc.add(src + "Paradigmas/bautixgaviola.png");
         paradigmasSrc.add(src + "Paradigmas/Pablo Vidal Base.png");
         List<String> inteligenciaartificalSrc = new ArrayList<String>();
         inteligenciaartificalSrc.add(src + "Inteligencia Artificial/inteligencia ESBIRROS.png");
@@ -37,6 +37,9 @@ public class HashImagenesSrc {
         List<String> pasantiasSrc = new ArrayList<String>();
         pasantiasSrc.add(src + "Pasantias/Pala.png");
         pasantiasSrc.add(src + "Pasantias/image (1).png");
+        List<String> arquitecturaSrc = new ArrayList<String>();
+        arquitecturaSrc.add(src + "Arquitectura/Microchip ESBIRROS.png");
+        arquitecturaSrc.add(src + "Arquitectura/Osvaldo.png");
         
         //Insertamos al hash
         hashtable.put("Algebra", algebraSrc);
@@ -48,6 +51,7 @@ public class HashImagenesSrc {
         hashtable.put("Compiladores", compiladoresSrc);
         hashtable.put("Tesis", tesisSrc);
         hashtable.put("Pasantias", pasantiasSrc);
+        hashtable.put("Arquitectura", arquitecturaSrc);
         
         
         

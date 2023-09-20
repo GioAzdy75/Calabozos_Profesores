@@ -29,8 +29,8 @@ public class gameController {
 	}
 	
 	//Metodo para Obtener Heroe a partir de una Lista
-	public static Heroe obtenerHeroe(int input_teclado,List<? extends Heroe>lista_heroes) {
-		return lista_heroes.get(input_teclado - 1);
+	public static Heroe obtenerHeroe(int input_teclado,List<Criatura>lista_heroes) {
+		return (Heroe) lista_heroes.get(input_teclado - 1);
 	}
 	
 	//Valida el entero que ingrasa desde: valor , hasta valor , siendo valor = a cualquier entero

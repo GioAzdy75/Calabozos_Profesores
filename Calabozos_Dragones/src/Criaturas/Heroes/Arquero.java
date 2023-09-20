@@ -31,7 +31,7 @@ public class Arquero extends Heroe {
 	/**
 	 * Tira tres flechas a la vez y daña a enemigos al azar , cada flecha tiene la mitad de daño del rango del Arquero
 	 */
-	public void HabilidadEspecial(List<? extends Criatura> lista_criaturas) {
+	public void HabilidadEspecial(List<Criatura> lista_criaturas) {
 		this.setEnergia(this.getEnergia()-this.getConsumoHabilidadEspecial());
 		
 		System.out.println("Ataque Triple Flecha");
